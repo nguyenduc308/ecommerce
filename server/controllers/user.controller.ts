@@ -7,11 +7,11 @@ class UserController {
     public async createUser(req: Request, res: Response) {
         const { valid, errors } = validatorSignUp(req.body)
         if(!valid) return res.status(400).json({error: errors});
-        const { email, password} = req.body;
+        const { email, password, fullName, phoneNumber} = req.body;
         try {
             const user = await User.findOne({email});
             if(user) return res.status(400).json({msg: 'Email already exist!'}) 
-            const newUser = new User({email, password});
+            const newUser = new User({email, password, fullName, phoneNumber});
             await newUser.save((error)=> {
                 console.log(error);
             });

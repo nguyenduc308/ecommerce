@@ -22,8 +22,7 @@ class UserController {
                 {expiresIn: 360000000}, 
                 (error, token)=> {
                     if(error) return  res.status(500).json({error: "Server error 2"})
-                    return res.status(201).json({
-                        token});
+                    return res.status(201).json({token});
                 })
         } catch (error) {
             return res.status(500).json({error: "Server error"})

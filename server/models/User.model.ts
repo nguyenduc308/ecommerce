@@ -1,9 +1,8 @@
-import  mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
     fullName: {
-        type: String, 
-        required: true
+        type: String
     },
     userType: {
         type: Number,
@@ -21,8 +20,6 @@ const UserSchema = new mongoose.Schema({
         type: String, 
         required: true
     }
-}, {
-    timestamps: true
 })
 
 // UserSchema.pre('save', function(next) {

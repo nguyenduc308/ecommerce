@@ -1,13 +1,15 @@
 import express, { Request, Response, NextFunction } from 'express';
-import bodyParser from 'body-parser'
-import { UserRoutes } from './routes/api'
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import { UserRoutes } from './routes/api';
 class App {
     public app: express.Application;
     public userRoutes = new UserRoutes();
     constructor() {
         this.app = express();
-        this.userRoutes.routes(this.app);
         this.config();
+        this.connectDb();
+        this.userRoutes.routes(this.app);
     }
     private config():void {
         this.app.use(function(req: Request, res: Response, next: NextFunction) {
@@ -19,6 +21,14 @@ class App {
 
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+    }
+    private async connectDb() {
+        try {
+            await mongoose.connect('mongodb+srv://admin:abc123!@ecomerce-a9ij9.mongodb.net/ecomerce?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+            console.log("Database connected");
+        } catch(error) {
+            console.error(error)
+        }
     }
 }
 

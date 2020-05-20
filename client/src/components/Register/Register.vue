@@ -12,14 +12,35 @@
                         <div class="form-register">
                             <img class="form-register__logo" src="../../assets/img/logo.png" alt="">
                             <h3 class="form-register__title">Open up your Strax Account now</h3>
-                            <router-link to="/login" class="form-register__link">Already signed up? Log in</router-link>>
+                            <router-link to="/login" class="form-register__link">Already signed up? Log in</router-link>
                             <div class="form-group">
-                                <input class="form-group__input" type="email" placeholder="Your email address">
+                                <input 
+                                class="form-group__input" 
+                                type="email" 
+                                placeholder="Your email address"
+                                v-model="email"
+                                >
                             </div>
                             <div class="form-group">
-                                <input class="form-group__input" type="password" placeholder="Create a password">
+                                <input 
+                                class="form-group__input" 
+                                type="password" 
+                                placeholder="Create a password"
+                                v-model="password"
+                                >
                             </div>
-                            <button class="btn-register">Create</button>
+                            <div class="form-group">
+                                <input 
+                                class="form-group__input" 
+                                type="password" 
+                                placeholder="Confirm a password"
+                                v-model="confirmPassword"
+                                >
+                            </div>
+                            <button class="btn-register"
+                            @click="postDataRegister"
+                            >Create
+                            </button>
                             <span class="register-or">OR</span>
                             <button class="btn-connect__facebook">Connect with Facebook</button>
                             <button class="btn-connect__google">Connect with Google</button>
@@ -32,8 +53,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { log } from 'util'
 export default {
-
+    data() {
+        return {
+            email:'',
+            password:'',
+            confirmPassword:''
+        }
+    },
+    methods: {
+        postDataRegister(){
+            axios.post('http://localhost:8000/register',{
+                email:this.email,
+                password:this.password,
+                confirmPassword:this.confirmPassword
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+        }
+    },
 }
 </script>
 

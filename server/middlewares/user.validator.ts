@@ -1,23 +1,19 @@
 import { isEmail, isEmpty } from '../helpers/validator'
 
 export const validatorSignUp = (data:any) => {
-    let errors = {
-        email: null,
-        password: null,
-        confirmPassword: null,
-    }
+    let errors = {}
     if(isEmpty(data.email)) {
-        errors.email = "Email is required"
+        errors['email'] = "Email is required"
     } else if(!isEmail(data.email)) {
-        errors.email = "Email invalid"
+        errors['email'] = "Email invalid"
     }
     if(isEmpty(data.password)) {
-        errors.email = "Password is required"
+        errors['email'] = "Password is required"
     } else if(data.password.length < 6) {
-        errors.password = "Password is weak"
+        errors['password'] = "Password is weak"
     }
     if(data.password !== data.confirmPassword) {
-        errors.confirmPassword = "Password confirm do not match"
+        errors['confirmPassword'] = "Password confirm do not match"
     }
     return {
         errors,

@@ -14,12 +14,27 @@
                             <h3 class="form-register__title">Welcome back</h3>
                             <router-link to="/register" class="form-register__link">New to Hepro? Sign up</router-link>>
                             <div class="form-group">
-                                <input class="form-group__input" type="email" placeholder="Your email address">
+                                <input 
+                                class="form-group__input" 
+                                type="email" 
+                                placeholder="Your email address"
+                                v-model="email"
+                                >
+                                
                             </div>
                             <div class="form-group">
-                                <input class="form-group__input" type="password" placeholder="Your password">
+                                <input 
+                                class="form-group__input" 
+                                type="password"
+                                placeholder="Your password"
+                                v-model="password"
+                                >
                             </div>
-                            <button class="btn-register">Login</button>
+                            <button 
+                            class="btn-register"
+                            @click="login"
+                            >Login
+                            </button>
                             <span class="register-or">OR</span>
                             <button class="btn-connect__facebook">Connect with Facebook</button>
                             <button class="btn-connect__google">Connect with Google</button>
@@ -32,8 +47,30 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { log } from 'util'
 export default {
-
+    data() {
+        return {
+            email:'',
+            password:''
+        }
+    },
+    methods: {
+        login(){
+            axios.post('http://localhost:8000/login',{
+                email:this.email,
+                password:this.password
+            })
+            .then(res =>{
+                console.log(res);
+            })
+            .catch((err) =>{
+                console.log(err);
+                
+            })
+        }
+    },
 }
 </script>
 

@@ -1,11 +1,7 @@
-import { Request, Response } from 'express';
-
+import UserController from '../controllers/user.controller'
 class UserRoutes {
     public routes(app: any): void {
-        app.route('/users')
-            .get((req: Request, res: Response)=> {
-                res.status(200).send("hello")
-            } )
+        app.route('/register').post(UserController.createUser)
     }
 }
 

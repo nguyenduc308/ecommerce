@@ -9,7 +9,8 @@ class App {
         this.app = express();
         this.config();
         this.connectDb();
-        this.userRoutes.routes(this.app);
+        this.userRoutes.routesRegister(this.app);
+        this.userRoutes.routesLogin(this.app);
     }
     private config():void {
         this.app.use(function(req: Request, res: Response, next: NextFunction) {

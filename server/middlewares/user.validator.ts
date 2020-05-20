@@ -22,16 +22,12 @@ export const validatorSignUp = (data:any) => {
 }
 
 export const validatorLogin = (data: any) => {
-    let errors = {
-        email: null,
-        password: null,
-        confirmPassword: null,
-    }
+    let errors = {}
     if(isEmpty(data.email)) {
-        errors.email = "Email is required"
+        errors['email'] = "Email is required"
     }
     if(isEmpty(data.password)) {
-        errors.email = "Password is required"
+        errors['password'] = "Password is required"
     } 
     return {
         errors,

@@ -43,31 +43,41 @@
                 </div>
             </div>
         </div>
+        <div v-if="modalLogin" class="wrapper-modal">
+            <ModalLoader/>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { log } from 'util'
+import ModalLoader from '../Modal/ModalLoader'
 export default {
     data() {
         return {
             email:'',
-            password:''
+            password:'',
+            modalLogin:false
         }
+    },
+    components: {
+        ModalLoader
     },
     methods: {
         login(){
+            this.modalLogin = true
             axios.post('http://localhost:8000/login',{
                 email:this.email,
                 password:this.password
             })
             .then(res =>{
-                console.log(res);
+                this.modalLogin = false
+                this.$router.push('/')
             })
             .catch((err) =>{
-                console.log(err);
-                
+                this.modalLogin = false
+                alert("Thông tin tài khoản hoặc mật khẩu không tồn tại")
             })
         }
     },
@@ -77,6 +87,8 @@ export default {
 <style>
 .wrapper-register{
     box-sizing: border-box;
+    position: relative;
+    height: 100vh;
 }
 .register{
     width: 100%;
@@ -183,4 +195,5 @@ export default {
     color: white;
     background-color: #EA4335;
 }
+
 </style>

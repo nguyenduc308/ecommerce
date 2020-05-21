@@ -13,6 +13,15 @@
                             <img class="form-register__logo" src="../../assets/img/logo.png" alt="">
                             <h3 class="form-register__title">Open up your Strax Account now</h3>
                             <router-link to="/login" class="form-register__link">Already signed up? Log in</router-link>
+                            <ul class="error-list">
+                                <li 
+                                class="error-item"
+                                v-for="error in errors"
+                                :key="error"
+                                >
+                                    {{error}}
+                                </li>
+                            </ul>
                             <div class="form-group">
                                 <input 
                                 class="form-group__input" 
@@ -22,7 +31,7 @@
                                 >
                             </div>
                             <div class="form-group">
-                                <input 
+                                <input
                                 class="form-group__input" 
                                 type="password" 
                                 placeholder="Create a password"
@@ -41,13 +50,16 @@
                             @click="postDataRegister"
                             >Create
                             </button>
-                            <span class="register-or">OR</span>
+                            <!-- <span class="register-or">OR</span>
                             <button class="btn-connect__facebook">Connect with Facebook</button>
-                            <button class="btn-connect__google">Connect with Google</button>
+                            <button class="btn-connect__google">Connect with Google</button> -->
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-if="modalRegister" class="wrapper-modal">
+            <ModalLoader/>
         </div>
     </div>
 </template>
@@ -55,29 +67,66 @@
 <script>
 import axios from 'axios'
 import { log } from 'util'
+import ModalLoader from '../Modal/ModalLoader'
 export default {
     data() {
         return {
             email:'',
             password:'',
-            confirmPassword:''
+            confirmPassword:'',
+            modalRegister:false,
+            errors:[],
+            checkError:false
         }
+    },
+    components :{
+        ModalLoader
     },
     methods: {
+
+        isValidateForm(){
+            if(!this.password){
+                this.errors.push('Vui lòng nhập mật khẩu')
+            }
+            if(!this.confirmPassword){
+                this.errors.push('Vui lòng nhập xác nhận Password')
+            }
+            if(this.password !== this.confirmPassword){
+                this.errors.push('Passowrd không trùng hợp')
+            }
+            if(!this.isValidateEmail(this.email)){
+                this.errors.push('Email không đúng định dạng')
+            }
+            if(!this.errors.length){
+                this.checkError = true
+            }
+        },
+        isValidateEmail(email){
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        },
         postDataRegister(){
-            axios.post('http://localhost:8000/register',{
-                email:this.email,
-                password:this.password,
-                confirmPassword:this.confirmPassword
-            })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) =>{
-                console.log(err);
-            })
+            this.errors=[]
+            this.isValidateForm()
+            if(this.checkError){
+                this.modalRegister =true
+                    axios.post('http://localhost:8000/register',{
+                        email:this.email,
+                        password:this.password,
+                        confirmPassword:this.confirmPassword
+                    })
+                        .then((res) => {
+                            this.modalRegister =false
+                            this.$router.push('/')
+                    })
+                        .catch((err) =>{
+                            this.modalRegister =false
+                    })
+            }
+            
+
         }
-    },
+    }
 }
 </script>
 
@@ -189,5 +238,15 @@ export default {
 .btn-connect__google:hover{
     color: white;
     background-color: #EA4335;
+}
+.error {
+    border: 1px solid red;
+}
+.error-item{
+    color: red;
+    font-size: 1.6rem;
+    list-style: none;
+    text-align: center;
+    
 }
 </style>

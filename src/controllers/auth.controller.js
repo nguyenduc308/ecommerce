@@ -19,7 +19,7 @@ module.exports.register = async (req, res) => {
         const newUser = new User({email, password, fullName, phoneNumber, userId});
         await newUser.save();
 
-        const payload = {id: newUser._id, userType: newUser['userType']};
+        const payload = {id: newUser._id, userType: newUser.userType};
         jwt.sign(
             payload, 
             'A123213123AAAA', 
@@ -46,11 +46,10 @@ module.exports.login = async (req, res) => {
     try {
         const user = await User.findOne({email});
         if(!user) return res.status(400).json({error: "Login fail"});
-        console.log('call')
         const isMatch = compare(password, user['password']);
         if(!isMatch) return res.status(400).json({error: "Login fail"})
 
-        const payload = {id: user._id};
+        const payload = {id: user._id, userType: user.userType};
 
         jwt.sign(
             payload, 

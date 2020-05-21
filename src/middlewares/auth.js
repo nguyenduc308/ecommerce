@@ -19,6 +19,7 @@ module.exports.auth = async (req, res, next) => {
 
 module.exports.authorized = (userTypeArr) => async (req, res, next) => {
     const { userType } = req.user;
+    console.log(userType)
     const i = userTypeArr.findIndex(type => userType === type);
     if(i === -1) {
         return res.status(400).json({error: "Auth requried"})

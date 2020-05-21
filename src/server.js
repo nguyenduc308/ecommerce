@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 8009;
+const port = process.env.PORT || 8000;
 
 mongoose.connect('mongodb+srv://admin:abc123!@ecomerce-a9ij9.mongodb.net/ecomerce?retryWrites=true&w=majority',  {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
     .then(()=> console.log('Database connected!'))

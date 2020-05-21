@@ -1,21 +1,26 @@
 {
-  "name": "client",
+  "name": "loginVuejs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "create new login",
+  "author": "Dilys",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.9.15"
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.10.3",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "axios": "^0.19.2",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "nuxt": "^2.0.0",
+    "popper.js": "^1.16.1",
+    "vue-router": "^3.1.6"
   },
-  "devDependencies": {
-    "@types/express": "^4.17.6",
-    "@types/node": "^14.0.1",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.9.2"
-  }
+  "devDependencies": {}
 }

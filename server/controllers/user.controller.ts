@@ -20,8 +20,9 @@ class UserController {
                 'A123213123AAAA', 
                 {expiresIn: 360000000}, 
                 (error, token)=> {
-                    if(error) return  res.status(500).json({error: "Server error"})
-                    return res.status(201).json({token});
+                    if(error) return  res.status(500).json({error: "Server error"});
+                    const userRes = {email, fullName, phoneNumber};
+                    return res.status(201).json({token, user: {email,fullName, phoneNumber}});
                 })
         } catch (error) {
             return res.status(500).json({error: "Server error"})
@@ -43,7 +44,8 @@ class UserController {
                 {expiresIn: 360000000}, 
                 (error, token)=> {
                     if(error) return  res.status(500).json({error: "Server error"})
-                    return res.status(201).json({token});
+                    const userRes = {email:user['email'], fullName:user['fullName'], phoneNumber: user['phoneNumber']};
+                    return res.status(201).json({token, user: userRes});
                 })
         } catch (error) {
             return res.status(500).json({error: "Server error"})

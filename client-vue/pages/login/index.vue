@@ -15,6 +15,15 @@
                   <label for="inputPassword">Password</label>
                 </div>
 
+                <div class="box-error">
+                  <p
+                    v-show="errorMessage"
+                    class="text-danger text-error"
+                  >
+                    {{ errorMessage }}
+                  </p>
+                  
+                </div>
                 <div class="custom-control custom-checkbox mb-3">
                   <input type="checkbox" class="custom-control-input" id="customCheck1">
                   <label class="custom-control-label" for="customCheck1">Remember password</label>
@@ -53,23 +62,24 @@ export default {
   mounted() {},
   create() {},
   computed: {
-      ...mapGetters('login',['userAuth']),
+    ...mapGetters('login',['userAuth']),
   },
   methods: {
-      ...mapActions('login',['signin', ]),
+    ...mapActions('login',['signin', ]),
+
     async logIn() {
+      this.errorMessage = '';
       if(!this.dataUser.email || !this.dataUser.password)
       return false;
   
       let dataUser = await this.signin(this.dataUser).catch(er => {
         console.log(er);
-        this.errorMessage = er.message;
+        this.errorMessage = 'Thông tin tài khoản hoặc mật khẩu không tồn tại'
         return false;
       });
       
       if(!this.errorMessage)
         this.$router.push('/home');
-
     },
 
     

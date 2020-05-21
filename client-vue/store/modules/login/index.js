@@ -5,10 +5,8 @@ import mutations from "./mutations"
 export default {
     namespaced: true,
     state: {
-        userAuth: {
-            email: '',
-            password: '',
-        }
+        userAuth: null,
+        
     },
     getters,
     actions,

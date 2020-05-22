@@ -46,7 +46,8 @@ module.exports.login = async (req, res) => {
     try {
         const user = await User.findOne({email});
         if(!user) return res.status(400).json({error: "Login fail"});
-        const isMatch = compare(password, user['password']);
+        const isMatch = await compare(password, user['password']);
+        console.log(isMatch)
         if(!isMatch) return res.status(400).json({error: "Login fail"})
 
         const payload = {id: user._id, userType: user.userType};

@@ -72,6 +72,9 @@ export default {
                 password:this.password
             })
             .then(res =>{
+                this.$store.dispatch('SET_TOKEN', res.data.token)
+                this.$store.dispatch('SET_CURRENT_USER', res.data.user)
+                localStorage.setItem('token', JSON.stringify(res.data.token))
                 this.modalLogin = false
                 this.$router.push('/')
             })

@@ -13,46 +13,63 @@
                             <img class="form-register__logo" src="../../assets/img/logo.png" alt="">
                             <h3 class="form-register__title">Open up your Strax Account now</h3>
                             <router-link to="/login" class="form-register__link">Already signed up? Log in</router-link>
-                            <ul class="error-list">
-                                <li 
-                                class="error-item"
-                                v-for="error in errors"
-                                :key="error"
-                                >
-                                    {{error}}
-                                </li>
-                            </ul>
+                            <!-- Email -->
                             <div class="form-group">
                                 <input 
-                                class="form-group__input" 
+                                class="form-group__input form-control " 
                                 type="email" 
                                 placeholder="Your email address"
-                                v-model="email"
+                                v-model.trim="$v.email.$model"
+                                :class="{
+                                    'is-invalid' : $v.email.$error,
+                                    'is-valid' : !$v.email.$invalid
+                                }"
                                 >
                             </div>
+                            <!-- Password -->
                             <div class="form-group">
                                 <input
-                                class="form-group__input" 
+                                class="form-group__input form-control" 
                                 type="password" 
                                 placeholder="Create a password"
-                                v-model="password"
+                                v-model.trim="$v.password.$model"
+                                :class="{'is-invalid' : $v.password.$error,
+                                        'is-valid'  : !$v.password.$invalid
+                                    }
+                                "
                                 >
+                                <div class="valid-feedback">
+                                    Your password is  valid !
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.password.required">Password is required</span>
+                                    <span 
+                                    v-if="!$v.password.minLength">
+                                    Password must have at least {{ $v.password.$params.minLength.min }} letters.
+                                    </span>
+                                </div>
                             </div>
+                            <!-- Confỉrm Pasword  -->
                             <div class="form-group">
                                 <input 
-                                class="form-group__input" 
+                                class="form-group__input form-control" 
                                 type="password" 
                                 placeholder="Confirm a password"
-                                v-model="confirmPassword"
+                                v-model.trim="$v.confirmPassword.$model"
+                                :class="{'is-invalid' : $v.confirmPassword.$error,
+                                        'is-valid'  : (password !== '') ? !$v.confirmPassword.$invalid : ''}"
                                 >
+                                <div class="valid-feedback">
+                                    Your password is  valid !
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span v-if="!$v.confirmPassword.sameAsPassword">Passwords must be identical.</span>
+                                </div>
                             </div>
                             <button class="btn-register"
                             @click="postDataRegister"
                             >Create
                             </button>
-                            <!-- <span class="register-or">OR</span>
-                            <button class="btn-connect__facebook">Connect with Facebook</button>
-                            <button class="btn-connect__google">Connect with Google</button> -->
                         </div>
                     </div>
                 </div>
@@ -66,65 +83,74 @@
 
 <script>
 import axios from 'axios'
+import { required , minLength , sameAs , isUnique , email} from 'vuelidate/lib/validators'
 import { log } from 'util'
 import ModalLoader from '../Modal/ModalLoader'
+import { resolve } from 'url'
+import { rejects } from 'assert'
 export default {
     data() {
         return {
             email:'',
             password:'',
             confirmPassword:'',
-            modalRegister:false,
-            errors:[],
-            checkError:false
+            modalRegister:false
+        }
+    },
+    validations :{
+        password:{
+            required,
+            minLength: minLength(6)
+        },
+        confirmPassword:{
+            sameAsPassword: sameAs('password')
+        },
+        email:{
+            required,
+            email,
+            isUnique(value){
+                if(value === '') return true
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return new Promise ((resolve , rejects) =>{
+                    setTimeout(() =>{
+                        resolve(re.test(value))
+                    },350 + Math.random() * 300)
+                })
+            }
         }
     },
     components :{
         ModalLoader
     },
     methods: {
-
-        isValidateForm(){
-            if(!this.password){
-                this.errors.push('Vui lòng nhập mật khẩu')
-            }
-            if(!this.confirmPassword){
-                this.errors.push('Vui lòng nhập xác nhận Password')
-            }
-            if(this.password !== this.confirmPassword){
-                this.errors.push('Passowrd không trùng hợp')
-            }
-            if(!this.isValidateEmail(this.email)){
-                this.errors.push('Email không đúng định dạng')
-            }
-            if(!this.errors.length){
-                this.checkError = true
-            }
-        },
-        isValidateEmail(email){
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        },
         postDataRegister(){
-            this.errors=[]
-            this.isValidateForm()
-            if(this.checkError){
-                this.modalRegister =true
-                    axios.post('http://localhost:8000/register',{
-                        email:this.email,
-                        password:this.password,
-                        confirmPassword:this.confirmPassword
-                    })
-                        .then((res) => {
-                            this.modalRegister =false
-                            this.$router.push('/')
-                    })
-                        .catch((err) =>{
-                            this.modalRegister =false
-                    })
+            // this.modalRegister =true
+            // axios.post('http://localhost:8000/register',{
+            //     email:this.email,
+            //     password:this.password,
+            //     confirmPassword:this.confirmPassword
+            // })
+            //     .then((res) => {
+            //         this.$store.dispatch('SET_TOKEN', res.data.token)
+            //         this.$store.dispatch('SET_CURRENT_USER', res.data.user)
+            //         localStorage.setItem('token', JSON.stringify(res.data.token))
+            //         this.modalRegister =false
+            //         this.$router.push('/')
+            // })
+            //     .catch((err) =>{
+            //         this.modalRegister =false
+            // })
+            this.$v.$touch()
+            if(this.$v.$invalid){
+                this.submitStatus = 'ERROR'
             }
-            
-
+            else{
+                this.submitStatus = 'PENDING'
+                setTimeout(() => {
+                    this.submitStatus = 'OK'
+                    console.log("Ok");
+                },500)
+            }
         }
     }
 }
@@ -239,14 +265,11 @@ export default {
     color: white;
     background-color: #EA4335;
 }
-.error {
-    border: 1px solid red;
+.valid-feedback,
+.invalid-feedback
+{
+    font-size: 1.4rem;
+    text-align: left;
 }
-.error-item{
-    color: red;
-    font-size: 1.6rem;
-    list-style: none;
-    text-align: center;
-    
-}
+
 </style>

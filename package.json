@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "ecommerce",
     "version": "1.0.0",
     "description": "",
@@ -37,4 +38,39 @@
         "ts-node": "^8.10.1",
         "typescript": "^3.9.2"
     }
+=======
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "server": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenduc308/ecommerce.git"
+  },
+  "author": "Duc, Hao, Phuc, Hung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nguyenduc308/ecommerce/issues"
+  },
+  "homepage": "https://github.com/nguyenduc308/ecommerce#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.15",
+    "shortid": "^2.2.15",
+    "slugify": "^1.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+>>>>>>> 656874ad5abcae9fbd6fd18a0f4d6912d231584d
 }

@@ -1,18 +1,12 @@
-import * as mongoose from 'mongoose';
-import { genSalt, hash } from 'bcryptjs';
-import { generate  } from 'shortid';
+const mongoose = require('mongoose')
+const { genSalt, hash } = require('bcryptjs');
 
-type UserDocument = mongoose.Document & {
-    email: string;
-    password: string;
-    userType: number,
-    userId: string,
-    phoneNumber?: string,
-    fullName?: string
-};
 
 const UserSchema = new mongoose.Schema({
-    fullName: {
+    firstName: {
+        type: String
+    },
+    lastName: {
         type: String
     },
     userType: {
@@ -20,8 +14,7 @@ const UserSchema = new mongoose.Schema({
         default: 1002,
     },
     userId: {
-        type: String,
-        default: generate()
+        type: String
     },
     phoneNumber: {
         type: String
@@ -55,8 +48,7 @@ UserSchema.pre('save', function(next) {
 
 const User = mongoose.model('User', UserSchema, 'users');
 
-export {
+module.exports =  {
     User,
-    UserDocument,
     UserSchema
 }

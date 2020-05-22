@@ -11,6 +11,8 @@ class App {
         this.connectDb();
         this.userRoutes.routesRegister(this.app);
         this.userRoutes.routesLogin(this.app);
+        this.userRoutes.routesGetUser(this.app);
+        
     }
     private config():void {
         this.app.use(function(req: Request, res: Response, next: NextFunction) {

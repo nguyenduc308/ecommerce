@@ -15,10 +15,14 @@
                             <router-link to="/register" class="form-register__link">New to Hepro? Sign up</router-link>>
                             <div class="form-group">
                                 <input 
-                                class="form-group__input" 
+                                class="form-group__input form-control" 
                                 type="email" 
                                 placeholder="Your email address"
-                                v-model="email"
+                                v-model.trim="$v.email.$model"
+                                :class="{
+                                    'is-invalid' : $v.email.$error,
+                                    'is-valid' : !$v.email.$invalid
+                                }"
                                 >
                                 
                             </div>
@@ -51,7 +55,7 @@
 
 <script>
 import axios from 'axios'
-import { log } from 'util'
+import { required , minLength , sameAs , isUnique , email} from 'vuelidate/lib/validators'
 import ModalLoader from '../Modal/ModalLoader'
 export default {
     data() {
@@ -61,27 +65,58 @@ export default {
             modalLogin:false
         }
     },
+    validations :{
+        password:{
+            required,
+            minLength: minLength(6)
+        },
+        email:{
+            required,
+            email,
+            isUnique(value){
+                if(value === '') return true
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return new Promise ((resolve , rejects) =>{
+                    setTimeout(() =>{
+                        resolve(re.test(value))
+                    },350 + Math.random() * 300)
+                })
+            }
+        }
+    },
     components: {
         ModalLoader
     },
     methods: {
         login(){
-            this.modalLogin = true
-            axios.post('http://localhost:8000/login',{
-                email:this.email,
-                password:this.password
-            })
-            .then(res =>{
-                this.$store.dispatch('SET_TOKEN', res.data.token)
-                this.$store.dispatch('SET_CURRENT_USER', res.data.user)
-                localStorage.setItem('token', JSON.stringify(res.data.token))
-                this.modalLogin = false
-                this.$router.push('/')
-            })
-            .catch((err) =>{
-                this.modalLogin = false
-                alert("Thông tin tài khoản hoặc mật khẩu không tồn tại")
-            })
+            this.$v.$touch()
+            if(this.$v.$invalid){
+                this.submitStatus = 'ERROR'
+            }
+            else{
+                this.submitStatus = 'PENDING'
+                setTimeout(() =>{
+                    this.submitStatus = 'OK'
+                    this.modalRegister =true
+                    axios.post('http://localhost:8000/api/auth/login',{
+                    email:this.email,
+                    password:this.password
+                    })
+                    .then(res =>{
+                        this.$store.dispatch('SET_TOKEN', res.data.token)
+                        this.$store.dispatch('SET_CURRENT_USER', res.data.user)
+                        localStorage.setItem('user', JSON.stringify(res.data.user))
+                        this.modalLogin = false
+                        this.$router.push('/')
+                    })
+                    .catch((err) =>{
+                        this.modalLogin = false
+                        console.log(err);
+                        
+                        alert("Thông tin tài khoản hoặc mật khẩu không tồn tại")
+                    })
+                },500)
+            }
         }
     },
 }

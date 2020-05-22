@@ -84,7 +84,6 @@
 <script>
 import axios from 'axios'
 import { required , minLength , sameAs , isUnique , email} from 'vuelidate/lib/validators'
-import { log } from 'util'
 import ModalLoader from '../Modal/ModalLoader'
 import { resolve } from 'url'
 import { rejects } from 'assert'
@@ -124,22 +123,6 @@ export default {
     },
     methods: {
         postDataRegister(){
-            // this.modalRegister =true
-            // axios.post('http://localhost:8000/register',{
-            //     email:this.email,
-            //     password:this.password,
-            //     confirmPassword:this.confirmPassword
-            // })
-            //     .then((res) => {
-            //         this.$store.dispatch('SET_TOKEN', res.data.token)
-            //         this.$store.dispatch('SET_CURRENT_USER', res.data.user)
-            //         localStorage.setItem('token', JSON.stringify(res.data.token))
-            //         this.modalRegister =false
-            //         this.$router.push('/')
-            // })
-            //     .catch((err) =>{
-            //         this.modalRegister =false
-            // })
             this.$v.$touch()
             if(this.$v.$invalid){
                 this.submitStatus = 'ERROR'
@@ -148,7 +131,19 @@ export default {
                 this.submitStatus = 'PENDING'
                 setTimeout(() => {
                     this.submitStatus = 'OK'
-                    console.log("Ok");
+                    this.modalRegister =true
+                    axios.post('http://localhost:8000/api/auth/register',{
+                        email:this.email,
+                        password:this.password,
+                        confirmPassword:this.confirmPassword
+                    })
+                        .then((res) => {
+                            this.modalRegister =false
+                            this.$router.push('/login')
+                    })
+                        .catch((err) =>{
+                            this.modalRegister =false
+                    })
                 },500)
             }
         }

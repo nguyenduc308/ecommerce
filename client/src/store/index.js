@@ -5,7 +5,7 @@ import axios from 'axios'
 Vue.use(VueX)
 export const store  = new VueX.Store({
     state: {
-        token:'',
+        token: localStorage.getItem('token') || null,
         currentUser : {}
     },
     getters: {
@@ -17,9 +17,6 @@ export const store  = new VueX.Store({
         },
         SET_CURRENT_USER (state, user){
             state.currentUser = user
-        },
-        LOGIN(state, payload){
-            
         }
     },
     actions: {
@@ -29,12 +26,36 @@ export const store  = new VueX.Store({
         SET_CURRENT_USER({commit} , user) {
             commit('SET_CURRENT_USER' , user)
         },
-        LOGIN({commit} , payload){
-            return Promise((resolve , rejects) =>{
-                setTimeout(() =>{
-                    resolve(true)
-                },1000)
-            })
-        }
+        // REGISTER({commit} , payload){
+        //         axios.post('http://localhost:8000/api/auth/register',{
+        //             email:payload.email,
+        //             password:payload.password,
+        //             confirmPassword : payload.confirmPassword
+        //         })
+        //         .then((response) =>{
+        //             return Promise.resolve(response)
+        //         })
+        //         .catch((error) =>{
+        //             return Promise.reject(error)
+                    
+        //         })
+        // },
+        // LOGIN({commit} , payload){
+        //     return new Promise((resolve, reject) =>{
+        //         axios.post('http://localhost:8000/api/auth/login' ,{
+        //         email:payload.email,
+        //         password: payload.password
+        //         })
+        //         .then((response) =>{
+        //             const token = response.data.token
+        //             localStorage.setItem('token' , token)
+        //             commit('SET_TOKEN', token)
+        //             resolve(response)
+        //         })
+        //         .catch((error) =>{
+        //             reject(error)
+        //         })
+        //     })
+        // }
     }
 })

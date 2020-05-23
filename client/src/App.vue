@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style>
+#app{
+  overflow: hidden;
+}
 body{
   margin: 0;
   padding: 0;

@@ -34,22 +34,6 @@ const router =  new Router({
     },
   ]
 })
-router.beforeEach((to, props, next) =>{
-  const user = JSON.parse(localStorage.getItem('user'))
-  if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!user){
-      next('/login')
-    }
-    else{
-      if(!user){
-        next('/login')
-      }
-      next()
-    }
-  }
-  else{
-    next()
-  }
-})
+
 
 export default router 

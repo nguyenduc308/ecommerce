@@ -12,7 +12,7 @@ function SignUpPage(props) {
   return (
     <div className="signIn">
       <div className="gird">
-        <div className="row">
+        <div className="row" style={{ margin: 0 }}>
           <div className="l-6 m-12 c-12">
             <div className="signIn__wrap-img">
               <img src={signup} alt="" className="signIn__img" />

@@ -7,18 +7,21 @@ export const routers = [
   {
     path: PATHS.HOMEPAGE,
     exact: true,
-    component: HomePage,
+    private: true,
+    main: HomePage,
   },
 
   {
     path: PATHS.SIGNIN,
     exact: true,
-    component: SignInPage,
+    private: false,
+    main: SignInPage,
   },
 
   {
     path: PATHS.SIGNUP,
-    exact: true,
-    component: SignUpPage,
+    exact: false,
+    private: false,
+    main: SignUpPage,
   },
 ];

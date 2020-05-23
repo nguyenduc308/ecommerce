@@ -1,27 +1,29 @@
 import * as types from "../contants/actionsType";
 import callApi from "../utils/callApi";
-
+import PATHS from "../contants/paths";
+// Đăng ký
 export const register = (data) => async (dispatch) => {
   try {
-    return await callApi()
-      .post("/register", data)
-      .then((res) => {
-        console.log("register done", res.data);
-      });
+    const res = await callApi().post(PATHS.SIGNUP, data);
+    dispatch({
+      type: types.REGISTER_SUCCESS,
+      payload: res.data,
+    });
   } catch (error) {
     console.log("register fail", error.message);
   }
 };
 
+// Đăng nhập
 export const login = (data) => async (dispatch) => {
   try {
-    const res = await callApi().post("/login", data);
+    const res = await callApi().post(PATHS.SIGNIN, data);
     dispatch({
       type: types.LOGIN_SUCCESS,
       payload: res.data,
     });
   } catch (error) {
-    console.log("register fail", error.message);
+    console.log("login fail", error.message);
   }
 };
 
@@ -32,6 +34,7 @@ export const login = (data) => async (dispatch) => {
 //   });
 // };
 
+// User
 export const setUser = (user) => {
   return {
     type: types.SET_USER,
@@ -43,6 +46,7 @@ export const setUser = (user) => {
 export const showLoading = () => ({
   type: types.SHOW_LOADING,
 });
+
 export const hideLoading = () => ({
   type: types.HIDE_LOADING,
 });

@@ -1,2 +1,9 @@
-export const SIGNUP_FORM = "SIGNUP_FORM";
-export const SIGNIN_FORM = "SIGNIN_FORM";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGIN = "LOGIN";
+export const SET_USER = "SET_USER";
+export const LOGOUT = "LOGOUT";
+export const HIDE_LOADING = "HIDE_LOADING";
+export const SHOW_LOADING = "SHOW_LOADING";

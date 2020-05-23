@@ -1,135 +1,102 @@
-import React, { useState } from "react";
-import facebook from "./../../assets/images/facebook.svg";
-import google from "./../../assets/images/google.svg";
+import React from "react";
 import "./signUp.scss";
 import { useDispatch } from "react-redux";
-import * as actions from "../../actions";
 import { useHistory } from "react-router-dom";
+import { register, showLoading, hideLoading } from "../../actions";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import PATHS from "../../contants/paths";
 function SignUp(props) {
-  const [inputValue, setInputValue] = useState({
-    email: "",
-    password: "",
-    comfirmPassword: "",
-    errors: [],
-    checkError: false,
-  });
   const history = useHistory();
-
   const dispatch = useDispatch();
-  function isValidateForm() {
-    if (!inputValue.password) {
-      inputValue.errors.push("Vui lòng nhập mật khẩu");
-    }
-    if (!inputValue.comfirmPassword) {
-      inputValue.errors.push("Vui lòng nhập xác nhận Password");
-    }
-    if (inputValue.password !== inputValue.comfirmPassword) {
-      inputValue.errors.push("Passowrd không trùng hợp");
-    }
-    if (!isValidateEmail(inputValue.email)) {
-      inputValue.errors.push("Email không đúng định dạng");
-    }
-    if (!inputValue.errors.length) {
-      inputValue.checkError = true;
-    }
-  }
-  function isValidateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(inputValue.email).toLowerCase());
-  }
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    // axios.post("/api/user", { user: inputValue });
-
-    // action
-    inputValue.errors = [];
-    isValidateForm();
-    const action = actions.userSignUpForm(inputValue);
-    // console.log(inputValue.errors);
-    if (inputValue.checkError === true) {
-      dispatch(action);
-      history.push("/");
-    } else {
-      setInputValue({
-        ...inputValue,
-        errors: inputValue.errors,
-      });
-    }
-  }
-  const errorList = inputValue.errors.map((err, index) => {
-    return (
-      <ul key={index}>
-        <li style={{ color: "red" }} className="error">
-          {err}
-        </li>
-      </ul>
-    );
+  const formik = useFormik({
+    initialValues: { email: "", password: "", confirmPassword: "" },
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(6, "Phải có ít nhất 6 ký tự và nhiều nhất 15 ký tự")
+        .max(15, "Bạn đã vượt quá 15 ký tự")
+        .required("Bạn không được để trống"),
+      confirmPassword: Yup.string()
+        .min(6, "Phải có ít nhất 6 ký tự và nhiều nhất 15 ký tự")
+        .max(15, "Bạn đã vượt quá 15 ký tự")
+        .required("Bạn không được để trống"),
+      email: Yup.string()
+        .email("Email không đúng cú pháp")
+        .required("Bạn không được để trống"),
+    }),
+    onSubmit: (values) => {
+      // console.log(values);
+      dispatch(showLoading());
+      setTimeout(() => {
+        return dispatch(register(values))
+          .then((res) => {
+            dispatch(hideLoading());
+            history.push(PATHS.SIGNIN);
+          })
+          .catch((err) => {
+            dispatch(hideLoading());
+          });
+      }, 500);
+    },
   });
+
   return (
     <div className="signIn__content-form">
-      <form action="" className="signIn__form" onSubmit={handleSubmit}>
-        {errorList}
+      <form onSubmit={formik.handleSubmit}>
         <div className="signIn__content-form-group">
           <input
-            type="email"
+            id="email"
             name="email"
-            value={inputValue.email}
-            onChange={handleChange}
-            className="signIn__content-form-input"
-            placeholder="Your email address"
+            type="email"
+            placeholder="Enter your email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`signIn__content-form-input error ${
+              formik.errors.email && formik.touched.email
+            }`}
           />
         </div>
+        {formik.errors.email && formik.touched.email && (
+          <div className="input-feedback">{formik.errors.email}</div>
+        )}
         <div className="signIn__content-form-group">
           <input
-            type="password"
+            id="password"
             name="password"
-            value={inputValue.password}
-            onChange={handleChange}
-            className="signIn__content-form-input"
-            placeholder="create a password"
+            type="password"
+            placeholder="Enter your password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`signIn__content-form-input error ${
+              formik.errors.password && formik.touched.password
+            }`}
           />
         </div>
+        {formik.errors.password && formik.touched.password && (
+          <div className="input-feedback">{formik.errors.password}</div>
+        )}
         <div className="signIn__content-form-group">
           <input
+            id="confirmPassword"
+            name="confirmPassword"
             type="password"
-            name="comfirmPassword"
-            value={inputValue.comfirmPassword}
-            onChange={handleChange}
-            className="signIn__content-form-input"
-            placeholder="confirm a password"
+            placeholder="Enter your confirmPassword"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`signIn__content-form-input error ${
+              formik.errors.confirmPassword && formik.touched.confirmPassword
+            }`}
           />
         </div>
+        {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+          <div className="input-feedback">{formik.errors.confirmPassword}</div>
+        )}
         <button className="signIn__content-btn">
           <i className="far fa-arrow-alt-circle-right"></i> Sign Up
         </button>
-        <span className="signIn__content-or">OR</span>
-        <div className="signIn__content-controls">
-          <button className="signIn__content-controls-fb">
-            <span className="signIn__content-controls-fb-icon">
-              <img src={facebook} alt="" />
-            </span>
-            <span className="signIn__content-controls-fb-name">
-              Connect with Facebook
-            </span>
-          </button>
-          <button className="signIn__content-controls-gg">
-            <span className="signIn__content-controls-gg-icon">
-              <img src={google} alt="" />
-            </span>
-            <span className="signIn__content-controls-gg-name">
-              Connect with Google
-            </span>
-          </button>
-        </div>
       </form>
     </div>
   );

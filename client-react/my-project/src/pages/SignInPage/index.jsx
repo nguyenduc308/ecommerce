@@ -1,13 +1,12 @@
 import React from "react";
-// import "./signUpPage.scss";
 import signup from "../../assets/images/signup.jpg";
 import logo from "./../../assets/images/logo.png";
-import SignUp from "../../components/SignUp";
 import { Link } from "react-router-dom";
+
+import SignIn from "../../components/SignIn";
 import Loading from "../../components/Loading";
 import { useSelector } from "react-redux";
-// import "./signUpPage.scss";
-function SignUpPage(props) {
+function SignInPage(props) {
   const isLoading = useSelector((state) => state.loading.isLoading);
   return (
     <div className="signIn">
@@ -29,12 +28,12 @@ function SignUpPage(props) {
                 </h3>
                 <p className="signIn__content-desc">
                   Already signed up?{" "}
-                  <Link to="/login" className="signIn__content-signUp">
-                    Sign In
+                  <Link to="/register" className="signIn__content-signUp">
+                    Sign Up
                   </Link>
                 </p>
               </div>
-              <SignUp />
+              <SignIn />
             </div>
           </div>
         </div>
@@ -44,4 +43,4 @@ function SignUpPage(props) {
   );
 }
 
-export default SignUpPage;
+export default SignInPage;

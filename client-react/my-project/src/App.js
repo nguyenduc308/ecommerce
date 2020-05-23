@@ -1,18 +1,18 @@
 import React from "react";
-import SignIn from "./components/SignIn";
-import SignUpPage from "./pages/SignUpPage";
-import HomePage from "./pages/HomePage";
 import { Switch, Route } from "react-router-dom";
-
+import { routers } from "./router";
 function App() {
   return (
     <div className="wrapper">
       <Switch>
-        {/* <Route exact path="/" component={HomePage} /> */}
-        <Route exact path="/" component={HomePage} />
-        <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUpPage} />
-        {/* <Route component={HomeError} /> */}
+        {routers &&
+          routers.map((route, index) => {
+            return (
+              <Route key={index} exact={route.exact} path={route.path}>
+                <route.component />
+              </Route>
+            );
+          })}
       </Switch>
     </div>
   );

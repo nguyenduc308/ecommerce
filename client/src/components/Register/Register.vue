@@ -129,22 +129,26 @@ export default {
             }
             else{
                 this.submitStatus = 'PENDING'
-                setTimeout(() => {
-                    this.submitStatus = 'OK'
-                    this.modalRegister =true
+                console.log('call')
+                // setTimeout(() => {
+                    // this.submitStatus = 'OK'
+                    // this.modalRegister =true
                     axios.post('http://localhost:8000/api/auth/register',{
                         email:this.email,
                         password:this.password,
                         confirmPassword:this.confirmPassword
                     })
                         .then((res) => {
-                            this.modalRegister =false
-                            this.$router.push('/login')
+                            // this.modalRegister =false
+                            console.log(res)
+                            // this.$router.push('/login')
                     })
                         .catch((err) =>{
-                            this.modalRegister =false
+                            const responseError = err.response
+                            console.log(responseError)
+                            // this.modalRegister =false
                     })
-                },500)
+                // },500)
             }
         }
     }

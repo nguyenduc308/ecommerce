@@ -89,34 +89,28 @@ export default {
     },
     methods: {
         login(){
-            this.$v.$touch()
-            if(this.$v.$invalid){
-                this.submitStatus = 'ERROR'
-            }
-            else{
-                this.submitStatus = 'PENDING'
-                setTimeout(() =>{
-                    this.submitStatus = 'OK'
-                    this.modalRegister =true
-                    axios.post('http://localhost:8000/api/auth/login',{
-                    email:this.email,
-                    password:this.password
-                    })
-                    .then(res =>{
-                        this.$store.dispatch('SET_TOKEN', res.data.token)
-                        this.$store.dispatch('SET_CURRENT_USER', res.data.user)
-                        localStorage.setItem('user', JSON.stringify(res.data.user))
-                        this.modalLogin = false
-                        this.$router.push('/')
-                    })
-                    .catch((err) =>{
-                        this.modalLogin = false
-                        console.log(err);
-                        
-                        alert("Thông tin tài khoản hoặc mật khẩu không tồn tại")
-                    })
-                },500)
-            }
+            // this.modalLogin =true
+            // this.$v.$touch()
+            // if(this.$v.$invalid){
+            //     this.submitStatus = 'ERROR'
+            // }
+            // else{
+            //     this.submitStatus = 'OK'
+            //     const payload = {
+            //         email:this.email,
+            //         password:this.password
+            //     }
+            //     this.$store.dispatch('LOGIN', payload)
+            //     .then((response) =>{
+            //         this.modalLogin = false
+            //         console.log(response);
+            //         this.$router.push('/')
+            //     })
+            //     .catch((error) =>{
+            //         console.log(error);
+            //         this.modalLogin = false
+            //     })
+            // }
         }
     },
 }

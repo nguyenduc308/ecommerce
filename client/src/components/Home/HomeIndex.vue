@@ -1,5 +1,7 @@
 <template>
-    <Header/>
+    <div class="home">
+        <Header/>
+    </div>
 </template>
 
 <script>
@@ -10,9 +12,12 @@ export default {
             
         }
     },
-    components: {
+    components:{
         Header
-    }
+    },
+    methods: {
+        
+    },
 }
 </script>
 

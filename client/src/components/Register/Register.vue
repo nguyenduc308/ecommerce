@@ -123,12 +123,18 @@ export default {
     },
     methods: {
         postDataRegister(){
+            // this.modalRegister = true
             this.$v.$touch()
             if(this.$v.$invalid){
                 this.submitStatus = 'ERROR'
             }
             else{
-                this.submitStatus = 'PENDING'
+                this.submitStatus = 'OK'
+                 const payload = {
+                     email: this.email,
+                     password : this.password,
+                     confirmPassword :this.confirmPassword
+                 }
                 console.log('call')
                 // setTimeout(() => {
                     // this.submitStatus = 'OK'
@@ -149,6 +155,23 @@ export default {
                             // this.modalRegister =false
                     })
                 // },500)
+
+                
+                // this.$store.dispatch('REGISTER',payload)
+                //     .then((response) =>{
+                //         this.modalRegister = false
+                //         // this.$router.push('/login')
+                //         console.log(response);
+                //     })
+                //     .catch((error) =>{
+                //         this.modalRegister = false
+                //         console.log(error);
+                //     })
+                    // return axios.post('http://localhost:8000/api/auth/register',payload)
+                    // .catch((err) =>{
+                    //     console.log(err);
+                        
+                    // })
             }
         }
     }

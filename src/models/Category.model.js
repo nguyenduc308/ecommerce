@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
 const CategorySchema = new mongoose.Schema({
     slug: {
@@ -9,7 +10,11 @@ const CategorySchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    products: [{
+        type: ObjectId,
+        ref: 'Product'
+    }]
 }, {
     timestamps: true
 })

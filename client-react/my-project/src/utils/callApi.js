@@ -1,12 +1,8 @@
 import axios from "axios";
 
-const callApi = (token) => {
+const callApi = () => {
   return axios.create({
-    baseURL: "http://localhost:8000/api/auth",
-    // headers: {
-    //   token: token,
-    //   "Content-Type": "application/json",
-    // },
+    baseURL: "http://localhost:8000/api",
   });
 };
 

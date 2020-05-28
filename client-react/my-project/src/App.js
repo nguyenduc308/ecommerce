@@ -3,12 +3,13 @@ import { Switch, Route } from "react-router-dom";
 import { routers } from "./router";
 import PrivateRoute from "./router/PrivateRoute";
 import { useSelector } from "react-redux";
+import "./assets/scss/sb-admin-2.scss";
 // import HomePage from "./pages/HomePage";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   console.log(isAuthenticated);
   return (
-    <div className="wrapper">
+    <div className="app">
       <Switch>
         {routers &&
           routers.map((route, index) => {

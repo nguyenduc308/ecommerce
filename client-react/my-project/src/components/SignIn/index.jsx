@@ -1,6 +1,6 @@
 import React from "react";
 import "./signIn.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login, showLoading, hideLoading } from "../../actions";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
@@ -10,6 +10,8 @@ import { useFormik } from "formik";
 function SignIn() {
   const dispatch = useDispatch();
   const history = useHistory();
+  // const token = useSelector((state) => state.auth.token);
+  // console.log(token);
   const formik = useFormik({
     initialValues: {
       email: "",

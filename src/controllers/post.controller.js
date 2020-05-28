@@ -25,7 +25,7 @@ module.exports.getPosts = async (req, res) => {
     try {
         const posts = await Post.find()
                                 .populate('categories')
-                                .populate('author', '_id userId firstName, lastName');;
+                                .populate('author', '_id userId firstName, lastName');
         return res.status(200).json({
             posts
     })

@@ -16,15 +16,19 @@
                             <!-- Email -->
                             <div class="form-group">
                                 <input 
+                                @input="onChangeEmail"
                                 class="form-group__input form-control " 
                                 type="email" 
                                 placeholder="Your email address"
                                 v-model.trim="$v.email.$model"
                                 :class="{
-                                    'is-invalid' : $v.email.$error,
+                                    'is-invalid' : $v.email.$error || this.error,
                                     'is-valid' : !$v.email.$invalid
                                 }"
                                 >
+                                <div class="invalid-feedback display-block">
+                                    <span v-if="error">{{error}}</span>
+                                </div>
                             </div>
                             <!-- Password -->
                             <div class="form-group">
@@ -66,17 +70,18 @@
                                     <span v-if="!$v.confirmPassword.sameAsPassword">Passwords must be identical.</span>
                                 </div>
                             </div>
-                            <button class="btn-register"
+                            <button v-if="!modalRegister" class="btn-register"
                             @click="postDataRegister"
                             >Create
+                            </button>
+                            <button v-if="modalRegister" class="btn btn-primary btn-loading">
+                                <span class="spinner-border spinner-border-sm spinner-text "></span>
+                            Loading..
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-if="modalRegister" class="wrapper-modal">
-            <ModalLoader/>
         </div>
     </div>
 </template>
@@ -93,7 +98,9 @@ export default {
             email:'',
             password:'',
             confirmPassword:'',
-            modalRegister:false
+            modalRegister:false,
+            error:'',
+            checkErr :true
         }
     },
     validations :{
@@ -122,56 +129,37 @@ export default {
         ModalLoader
     },
     methods: {
+        onChangeEmail(){
+            this.error= ''
+        },
         postDataRegister(){
-            // this.modalRegister = true
+            this.modalRegister = true
             this.$v.$touch()
             if(this.$v.$invalid){
                 this.submitStatus = 'ERROR'
+                this.modalRegister = false
             }
             else{
                 this.submitStatus = 'OK'
-                 const payload = {
-                     email: this.email,
-                     password : this.password,
-                     confirmPassword :this.confirmPassword
-                 }
-                console.log('call')
-                // setTimeout(() => {
-                    // this.submitStatus = 'OK'
-                    // this.modalRegister =true
-                    axios.post('http://localhost:8000/api/auth/register',{
-                        email:this.email,
-                        password:this.password,
-                        confirmPassword:this.confirmPassword
-                    })
-                        .then((res) => {
-                            // this.modalRegister =false
-                            console.log(res)
-                            // this.$router.push('/login')
-                    })
-                        .catch((err) =>{
-                            const responseError = err.response
-                            console.log(responseError)
-                            // this.modalRegister =false
-                    })
-                // },500)
-
-                
-                // this.$store.dispatch('REGISTER',payload)
-                //     .then((response) =>{
-                //         this.modalRegister = false
-                //         // this.$router.push('/login')
-                //         console.log(response);
-                //     })
-                //     .catch((error) =>{
-                //         this.modalRegister = false
-                //         console.log(error);
-                //     })
-                    // return axios.post('http://localhost:8000/api/auth/register',payload)
-                    // .catch((err) =>{
-                    //     console.log(err);
-                        
-                    // })
+                const payload = {
+                    email: this.email,
+                    password : this.password,
+                    confirmPassword :this.confirmPassword
+                }
+                setTimeout(() => {
+                    this.submitStatus = 'OK'
+                    this.modalRegister =true
+                        this.$store.dispatch('REGISTER',payload)
+                        .then((response) =>{
+                            this.modalRegister = false
+                            this.$router.push('/login')
+                            console.log(response);
+                        })
+                        .catch((error) =>{
+                            this.modalRegister = false
+                            this.error = error.response.data.msg
+                        })
+                    },500)
             }
         }
     }
@@ -293,5 +281,26 @@ export default {
     font-size: 1.4rem;
     text-align: left;
 }
-
+.display-block{
+    display: block;
+}
+.btn-loading{
+    width: 100%;
+    height: 50px;
+    box-shadow: 0px 5px 28.5px 1.5px rgba(255, 97, 47, 0.2);
+    background-color: #ff612f;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.8rem;
+}
+.spinner-text{
+    font-size: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    
+    display: inline-block;
+    margin-bottom: 3px;
+}
 </style>

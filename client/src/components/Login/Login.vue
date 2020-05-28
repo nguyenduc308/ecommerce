@@ -34,10 +34,18 @@
                                 v-model="password"
                                 >
                             </div>
+                            <div v-if="error" class="alert alert-danger alert-dismissible fade show">
+                                {{error}}
+                            </div>
                             <button 
+                            v-if="!modalLogin"
                             class="btn-register"
                             @click="login"
                             >Login
+                            </button>
+                            <button v-if="modalLogin" class="btn btn-primary btn-loading">
+                                <span class="spinner-border spinner-border-sm spinner-text "></span>
+                            Loading..
                             </button>
                             <span class="register-or">OR</span>
                             <button class="btn-connect__facebook">Connect with Facebook</button>
@@ -47,22 +55,19 @@
                 </div>
             </div>
         </div>
-        <div v-if="modalLogin" class="wrapper-modal">
-            <ModalLoader/>
-        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { required , minLength , sameAs , isUnique , email} from 'vuelidate/lib/validators'
-import ModalLoader from '../Modal/ModalLoader'
 export default {
     data() {
         return {
             email:'',
             password:'',
-            modalLogin:false
+            modalLogin:false,
+            error:''
         }
     },
     validations :{
@@ -84,33 +89,31 @@ export default {
             }
         }
     },
-    components: {
-        ModalLoader
-    },
     methods: {
         login(){
-            // this.modalLogin =true
-            // this.$v.$touch()
-            // if(this.$v.$invalid){
-            //     this.submitStatus = 'ERROR'
-            // }
-            // else{
-            //     this.submitStatus = 'OK'
-            //     const payload = {
-            //         email:this.email,
-            //         password:this.password
-            //     }
-            //     this.$store.dispatch('LOGIN', payload)
-            //     .then((response) =>{
-            //         this.modalLogin = false
-            //         console.log(response);
-            //         this.$router.push('/')
-            //     })
-            //     .catch((error) =>{
-            //         console.log(error);
-            //         this.modalLogin = false
-            //     })
-            // }
+            this.modalLogin =true
+            this.$v.$touch()
+            if(this.$v.$invalid){
+                this.submitStatus = 'ERROR'
+                this.modalLogin= false
+            }
+            else{
+                this.submitStatus = 'OK'
+                const payload = {
+                    email:this.email,
+                    password:this.password
+                }
+                this.$store.dispatch('LOGIN', payload)
+                .then((response) =>{
+                    localStorage.setItem('token', response.data.token)
+                    this.modalLogin = false
+                    this.$router.push('/')
+                })
+                .catch((error) =>{
+                    this.modalLogin = false
+                    this.error = error.response.data.error
+                })
+            }
         }
     },
 }
@@ -227,5 +230,23 @@ export default {
     color: white;
     background-color: #EA4335;
 }
-
+.btn-loading{
+    width: 100%;
+    height: 50px;
+    box-shadow: 0px 5px 28.5px 1.5px rgba(255, 97, 47, 0.2);
+    background-color: #ff612f;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.8rem;
+}
+.spinner-text{
+    font-size: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    
+    display: inline-block;
+    margin-bottom: 3px;
+}
 </style>

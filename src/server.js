@@ -17,7 +17,13 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
     next();
 })
-
+app.use(function (error, req, res, next) {
+    if(error instanceof SyntaxError) {
+      return res.status(500).send({data : "Invalid data"});
+    } else {
+      next();
+    }
+  });
 //Routes
 app.use('/api', require('./routes'))
 

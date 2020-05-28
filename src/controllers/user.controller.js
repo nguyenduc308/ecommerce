@@ -5,7 +5,7 @@ module.exports.getUser = async (req, res) => {
 
     try {
         const user = await User.findOne({userId}).select("-password -_id");
-        if(!user) return res.status(403).json({message: "User not found"});
+        if(!user) return res.status(404).json({message: "User not found"});
         return res.status(200).json({
             user
         })

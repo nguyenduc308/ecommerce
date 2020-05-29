@@ -3,7 +3,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const CategorySchema = new mongoose.Schema({
     slug: {
-        type: String
+        type: String,
+        unique: true
     },
     name: {
         type: String,

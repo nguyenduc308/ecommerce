@@ -1,5 +1,5 @@
 module.exports.isEmpty = (str) => {
-    if(str.trim() === "") return true;
+    if(!str || str.trim() === "") return true;
     return false;
 }
 module.exports.isEmail = (email) => {

@@ -5,7 +5,7 @@ module.exports.getCategory = async (req, res) => {
     const { slug } = req.params;
     try {
         const category = await Category.findOne({slug});
-        if(!category) return res.status(400).json({
+        if(!category) return res.status(404).json({
             message: "Category not found"
         })
         return res.status(200).json({
@@ -20,7 +20,7 @@ module.exports.getCategory = async (req, res) => {
 }
 module.exports.getCategories = async (req, res) => {
     try {
-        const categories = await Category.find();
+        const categories = await Category.find().sort({'createdAt': -1});
         return res.status(200).json({
             categories
     })

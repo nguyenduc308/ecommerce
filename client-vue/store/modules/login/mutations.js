@@ -1,5 +1,5 @@
 export default {
-    USER_SIGIN_MESSAGE(state, userAuth) {
+    USER_AUTHENTICATION(state, userAuth) {        
         state.userAuth = userAuth;
     },
 }

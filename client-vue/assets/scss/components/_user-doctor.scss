@@ -1,0 +1,122 @@
+.user {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 1rem 1rem;
+    background-color: $white;
+    font-family: "Roboto";
+    width: 100%;
+    @media only screen and (max-width: 1200px) {
+        margin-right: 0px;
+    }
+    &__edit {
+        position: fixed;
+        z-index: 1000;
+        margin-top: 5.8rem;
+        &--list {
+            position: relative;
+            background-color: $white;
+            width: 11rem;
+            padding: 1rem 0;
+            list-style: none;
+            margin-left: 3rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(24, 24, 24, 0.14);
+            box-shadow: 0 2px 6px rgba($black,.5);
+            &::after,
+            &::before {
+                bottom: 100%;
+                left: 50%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+            &::after {
+                border-color: rgba(136, 183, 213, 0);
+                border-bottom-color: $white;
+                border-width: 10px;
+                margin-left: 17px;
+            }
+            &::before {
+                border-color: rgba(24, 24, 28, 0);
+                border-bottom-color: rgba(24, 24, 24, 0.14);
+                border-width: 12px;
+                margin-left: 14.5px;
+            }
+        }
+        &--item {
+            color: $color-user-1;
+            font-size: 1.4rem;
+            font-family: "Roboto";
+            font-weight: 400;
+            padding: 0.5rem 2rem;
+
+            &:not(:last-child) {
+                margin-bottom: 0.5rem;
+            }
+            &:hover {
+                background-color: $color-menu-primary;
+                color: $white;
+            }
+            &-img {
+                margin-left: 0.2rem;
+                width: 1.4rem;
+                height: auto;
+            }
+        }
+    }
+    &__ava {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 1.6rem;
+        object-fit: cover;
+        border: 0.2rem solid $white;
+    }
+    &__ava2 {
+        width: 7rem;
+        height: 7rem;
+        margin-left: 35px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 0.2rem solid $white;
+    }    
+    &__text {
+        margin-left: 1rem;
+        display: flex;
+        &--name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: $color-user-1;
+        }
+        &--position {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: $color-user-2;
+        }
+    }
+
+    &-menu__edit {
+        margin-top: 0.5rem;
+        &--checkbox {
+            display: none;
+        }
+
+        &--button {
+            cursor: pointer;
+            display: flex;
+        }
+        &--icon {
+            cursor: pointer;
+            transform: rotateY(0deg) translateY(-1.5rem);
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+
+        &--checkbox:checked + &--button &--icon {
+            transform: rotateX(180deg) translateY(1.5rem);
+        }
+    }
+}

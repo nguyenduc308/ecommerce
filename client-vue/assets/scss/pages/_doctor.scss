@@ -1,0 +1,40 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%; //10px = 1rem
+}
+
+body {
+    box-sizing: border-box;
+}
+
+.dtb {
+    &-container {
+        max-width: 100%;
+        height: 100vh;
+    }
+    &-menu {
+        background-color: $color-menu-primary;
+        min-height: 100vh;
+        width: 15%;
+        color: $white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: fixed;
+        @media only screen and (max-width: 1200px) {
+            width: 16%;
+        }
+        @media only screen and (max-width:992px) {
+            opacity: 0;
+            width: 0;
+            visibility: hidden;
+        }
+    }
+}

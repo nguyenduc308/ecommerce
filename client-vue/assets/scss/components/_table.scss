@@ -1,0 +1,135 @@
+.dtb-table {
+    margin: 0 3rem;
+  width:  calc(100% - 6rem);
+  border-collapse: collapse;
+  border-radius: 18px 18px 0 0;
+  font-family: 'Roboto';
+  border-style: hidden;
+
+  &__action{
+      margin-top: 3rem;
+      position: relative;
+      background-color: #fff;
+      width: 11rem;
+      padding: 1rem 0;
+      list-style: none;
+      margin-left: -6rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(24, 24, 24, 0.14);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      
+      justify-content: center;
+      text-align: center;
+      &--btn{
+        background-color: #fff;
+        border: solid 0px #fff;
+        &:focus{
+            outline: none;
+            
+        }
+      }
+  }
+  @media only screen and (max-width:1200px){
+    overflow-x: auto;
+    white-space: nowrap;
+  }   
+    &__header {
+        align-items: center;
+        &--list {
+            border: .2rem solid #f9f9f9;
+            background-color: $white;
+        }
+        &--item {
+            padding: 2rem 0 2rem 2rem;
+            font-size: 1.6rem;
+            font-weight: 400;
+            
+            color: $color-user-2;
+        }
+        &--checkbox {
+            position: absolute;
+            display: none;
+        }
+        &--label {
+            display: block;
+            position: relative;
+            padding-left: 3rem;
+            cursor: pointer;
+        }
+        &--action {
+            float: right;
+            margin-right: 1.2rem;
+        }
+        &--checkmark {
+            width: 16px;
+            height: 16px;
+            background-color: transparent;
+            border: 2px solid $color-checkmark;
+            position: absolute;
+            top: .5rem;
+            left: 0;
+            z-index: 10;
+            cursor: pointer;
+            &::after {
+                content: "";
+                position: absolute;
+                width: 1rem;
+                height: 1rem;
+                background-color: $color-checkmark;
+                z-index: 11;
+                top: .1rem;
+                left: .1rem;
+                opacity: 0;
+            }
+        }
+        &--checkbox:checked~&--checkmark::after {
+            opacity: 1;
+        }
+    }
+    &__content {
+        &--list {
+            background-color: $white;
+            border: .2rem solid #f9f9f9;
+            border-radius: 8px 8px 0 0;
+        }
+        &--item {
+            padding: 1.6rem 2.2rem;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: $color-user-1;
+        }
+        &--img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1.6rem;
+            border: .2rem solid $white;
+            margin-right: 1.2rem;
+        }
+        &--btn {
+            float: right;
+            margin-right: 2rem;
+        }
+    }
+}
+
+.font-item {
+    padding: 2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: none;
+    outline: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.table {
+    th,
+    td {
+        padding: 0;
+        vertical-align: baseline;
+    }
+    thead th {
+        vertical-align: baseline;
+    }
+}

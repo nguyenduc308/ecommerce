@@ -1,0 +1,135 @@
+.btn {
+    &__back{
+        cursor: pointer;
+               
+        &:hover{
+            text-decoration: none;
+            color:$color-menu-primary;
+        };
+
+        &--img{
+            transform: translateY(-.4rem);
+            padding-right: 0.2rem;
+        }
+
+        &--text {
+            padding-top: 1.5rem;
+            font-family: 'RobotoMedium';
+            font-size: 2rem;
+            font-weight: 500;
+            color: $color-user-1;
+            cursor: pointer;
+
+            &:hover{
+                color:$color-menu-primary;
+            }
+        }
+    }
+
+    &-add {
+        background-color: $color-menu-primary;
+        border: none;
+        border-radius: .5rem;
+        color: $white;
+        font-family: 'Roboto';
+        font-size: 1.5rem;
+        padding: .95rem 2.2rem;
+        font-weight: 500;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__table--action {
+        transform: translateY(2.3rem);
+        width: 2rem;
+        height: auto;
+        margin-left: 2rem;
+        border: none;
+        background-color: transparent;
+        &:focus {
+            outline: none;
+        }
+        &-img {
+            width: 2rem;
+        }
+    }
+    &-activity {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-family: 'Roboto';
+        font-weight: 400;
+        color: $color-menu-primary;
+        padding: .5rem 1.2rem;
+        border: .1rem solid $color-menu-primary;
+        border-radius: .6rem;
+        background-color: transparent;
+        &:focus {
+            outline: none;
+        }
+    }
+    &-rejected {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-family: 'Roboto';
+        font-weight: 400;
+        color: $red;
+        padding: .5rem 1.2rem;
+        border: .1rem solid $red;
+        border-radius: .6rem;
+        background-color: transparent;
+        &:focus {
+            outline: none;
+        }
+    }    
+    &-pending {
+        border: .1rem solid $color-user-2;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-family: 'Roboto';
+        font-weight: 400;
+        color: $color-user-2;
+        background-color: transparent;
+        padding: .5rem 1.2rem;
+        border-radius: .6rem;
+        &:focus {
+            outline: none;
+        }
+    }
+    &-Close {
+        &:focus {
+            outline: none;
+        }
+    }
+}
+.modal__btn {
+    &-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 0;
+        &--checkbox{
+            display: none;
+        }
+
+        &--item{
+            width: 10.1rem;
+            border: 1px solid $color-menu-primary;
+            border-radius: 6px;
+            background-color: transparent;
+            padding: .7rem 0;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-family: 'Roboto';
+            text-transform: uppercase;
+            color: $color-menu-primary;
+        }
+
+        &--checkbox:checked + &--item{
+            border:none;
+            background-color: $color-menu-primary;
+            color: $white;
+        }
+    }
+}

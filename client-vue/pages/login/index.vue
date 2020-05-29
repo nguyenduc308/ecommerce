@@ -1,226 +1,155 @@
 <template>
-  <div class="container">
-      <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card card-signin my-5">
-            <div class="card-body">
-              <h5 class="card-title text-center">Sign In</h5>
-              <form  @submit.prevent="logIn()" class="form-signin">
-                <div class="form-label-group">
-                  <input v-model="dataUser.email"  type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                  <label for="inputEmail">Email address</label>
-                </div>
-                <div class="form-label-group">
-                  <input v-model="dataUser.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                  <label for="inputPassword">Password</label>
-                </div>
-
-                <div class="box-error">
-                  <p
-                    v-show="errorMessage"
-                    class="text-danger text-error"
-                  >
-                    {{ errorMessage }}
-                  </p>
-                  
-                </div>
-                <div class="custom-control custom-checkbox mb-3">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Remember password</label>
-                </div>
-
-                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                <hr class="my-4">
-                <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-                <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-              </form>
-            </div>
-          </div>
+    <!-- main -->
+    <div class="center-container">
+        <!--header-->
+        <div class="header-w3l">
+            <h1>wecome </h1>
         </div>
-      </div>
+        <!--//header-->
+        <div class="main-content-agile">
+            <div class="sub-main-w3">	
+                <div class="wthree-pro">
+                    <h2>Login here</h2>
+                </div>
+                <form @submit.prevent="login">
+                    <div class="pom-agile">
+                        <input 
+                            v-model="user.email"
+                            placeholder="E-mail" 
+                            class="user"
+                            type="email" 
+                            :disabled="isActive"
+                        >
+                        <span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="pom-agile">
+                        <input  
+                        v-model="user.password"
+                            placeholder="Password" 
+                            class="pass"
+                            type="password" 
+                            :disabled="isActive"
+                        >
+                        <span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="box-error">
+                        <p
+                            v-show="errorMessage"
+                            class="text-danger text-error"
+                        >
+                            {{ errorMessage }}
+                        </p>
+                    </div>
+                    <div class="sub-w3l">
+                        <div class="login-register">
+                            <h6>
+                            <nuxt-link
+                                to="/forgot-password"
+                                class="btn-fogot"
+                            >Fogot password?</nuxt-link></h6>
+                            <h6>
+                                <nuxt-link 
+                                    to="/register"
+                                    class="btn-fogot">
+                                    Sign up
+                                </nuxt-link>
+                            </h6>
+                        </div>
+                        <div class="right-w3l">
+                            <button type="submit" >
+                                <span v-if="!isActive">Sign in</span>
+                                <img v-else src="../../assets/image/loading.svg">
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--//main-->
+        <!--footer-->
+        <div class="footer">
+            <p>&copy; 2020 Login Form | Design by <a href="http://w3layouts.com">Bii</a></p>
+        </div>
+        <!--//footer-->
     </div>
 </template>
 
 <script>
 
-import { mapActions, mapGetters } from "vuex";
- 
+import { mapActions } from "vuex";
+import { log } from 'util';
 export default {
-  middleware: 'test',
-  data() {
-    return {
-      errorMessage: '',
-
-      dataUser: {
-        email: '',
-        password: ''
-      },
-      
-    }
-  },
-  components: {},
-  mounted() {},
-  create() {},
-  computed: {
-    ...mapGetters('login',['userAuth']),
-  },
-  methods: {
-    ...mapActions('login',['signin', ]),
-
-    async logIn() {
-      this.errorMessage = '';
-      if(!this.dataUser.email || !this.dataUser.password)
-      return false;
-  
-      let dataUser = await this.signin(this.dataUser).catch(er => {
-        console.log(er);
-        this.errorMessage = 'Thông tin tài khoản hoặc mật khẩu không tồn tại'
-        return false;
-      });
-      
-      if(!this.errorMessage)
-        this.$router.push('/home');
+    layout: 'blank',
+    middleware: ['non-authentication'],
+    data() {
+        return{
+            user: {
+                email: '',
+                pasword: ''
+            },
+            errorMessage: '',
+            isActive: false,
+        }
     },
 
-    
-  }
-  
+    methods: {
+        ...mapActions('login', ['signin']),
+
+        async login() {
+            this.errorMessage='';
+            this.isActive=true;
+            if(!this.validateEmail()){
+                this.isActive=false;
+                return;
+            }
+            if(!this.validatePassword()){
+                this.isActive=false;
+                return;
+            }
+
+            const data = await this.signin(this.user).catch(err => {
+                this.errorMessage = err.message;
+                this.isActive=false;
+                return false;
+            });
+
+            if(data){
+                this.$router.push('/home');
+            }
+        },
+
+        validateEmail() {
+            if(!this.user.email) {
+                this.errorMessage = 'The email is required.';
+                return false;
+            }
+            else{
+                const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line
+                if (!regex.test(this.user.email)) {
+                    this.errorMessage = 'Must be a  valid email.';
+                    return false;
+                }
+                else{
+                    this.errorMessage = '';
+                    return true;
+                }
+            }
+        },
+
+        validatePassword() {
+            if(!this.user.password){
+                this.errorMessage = 'Password is required.'
+                return false;
+            }
+            if(this.user.password.length <6 || this.user.email.length > 20) {
+                this.errorMessage = 'Must be at least 6 and maximun 20 character.';
+                return false;
+            }
+            else{
+                this.errorMessage = '';
+                return true;
+            }
+        }
+    }
 }
 </script>
-
-<style>
-    :root {
-      --input-padding-x: 1.5rem;
-      --input-padding-y: .75rem;
-    }
-    body {
-      background: #007bff;
-      background: linear-gradient(to right, #0062E6, #33AEFF);
-    }
-
-    .card-signin {
-      border: 0;
-      border-radius: 1rem;
-      box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
-    }
-
-    .card-signin .card-title {
-      margin-bottom: 2rem;
-      font-weight: 300;
-      font-size: 1.5rem;
-    }
-
-    .card-signin .card-body {
-      padding: 2rem;
-    }
-
-    .form-signin {
-      width: 100%;
-    }
-
-    .form-signin .btn {
-      font-size: 80%;
-      border-radius: 5rem;
-      letter-spacing: .1rem;
-      font-weight: bold;
-      padding: 1rem;
-      transition: all 0.2s;
-    }
-
-    .form-label-group {
-      position: relative;
-      margin-bottom: 1rem;
-    }
-
-    .form-label-group input {
-      height: auto;
-      border-radius: 2rem;
-    }
-
-    .form-label-group>input,
-    .form-label-group>label {
-      padding: var(--input-padding-y) var(--input-padding-x);
-    }
-
-    .form-label-group>label {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      width: 100%;
-      margin-bottom: 0;
-      /* Override default `<label>` margin */
-      line-height: 1.5;
-      color: #495057;
-      border: 1px solid transparent;
-      border-radius: .25rem;
-      transition: all .1s ease-in-out;
-    }
-
-    .form-label-group input::-webkit-input-placeholder {
-      color: transparent;
-    }
-
-    .form-label-group input:-ms-input-placeholder {
-      color: transparent;
-    }
-
-    .form-label-group input::-ms-input-placeholder {
-      color: transparent;
-    }
-
-    .form-label-group input::-moz-placeholder {
-      color: transparent;
-    }
-
-    .form-label-group input::placeholder {
-      color: transparent;
-    }
-
-    .form-label-group input:not(:placeholder-shown) {
-      padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
-      padding-bottom: calc(var(--input-padding-y) / 3);
-    }
-
-    .form-label-group input:not(:placeholder-shown)~label {
-      padding-top: calc(var(--input-padding-y) / 3);
-      padding-bottom: calc(var(--input-padding-y) / 3);
-      font-size: 12px;
-      color: #777;
-    }
-
-    .btn-google {
-      color: white;
-      background-color: #ea4335;
-    }
-
-    .btn-facebook {
-      color: white;
-      background-color: #3b5998;
-    }
-
-    /* Fallback for Edge
-    -------------------------------------------------- */
-
-    @supports (-ms-ime-align: auto) {
-      .form-label-group>label {
-        display: none;
-      }
-      .form-label-group input::-ms-input-placeholder {
-        color: #777;
-      }
-    }
-
-    /* Fallback for IE
-    -------------------------------------------------- */
-
-    @media all and (-ms-high-contrast: none),
-    (-ms-high-contrast: active) {
-      .form-label-group>label {
-        display: none;
-      }
-      .form-label-group input:-ms-input-placeholder {
-        color: #777;
-      }
-    }
-</style>

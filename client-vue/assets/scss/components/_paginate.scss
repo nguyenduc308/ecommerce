@@ -1,0 +1,46 @@
+.paginate {
+    margin-top: 20px;
+    width: 100%;
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        li {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            a {
+                box-sizing: border-box;
+                display: inline-block;
+                min-width: 1.5em;
+                // padding: 9.5px 15px;
+                margin-left: -1px;
+                text-align: center;
+                text-decoration: none !important;
+                cursor: pointer;
+                background-color: #fff;
+                color: #969c9c;
+                border: 1px solid #e5e6e6;
+                border-left: 0px;
+                line-height: 36px;
+                width: 36px;
+                height: 36px;
+            }
+            &:first-child{
+                a{
+                    border-left: 1px solid #e5e6e6;
+                } 
+            }
+            &:hover a{
+                background-color: #f9f9f9;
+                color: #888b94;
+            }
+            &.active a {
+                color: $color-second;
+            }
+            &.disabled a{
+                cursor:not-allowed;
+                background-color: #ffffff61;
+            }
+        }
+    }
+}

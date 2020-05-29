@@ -1,5 +1,5 @@
 <template>
-    <section class="page-container dashboard" />
+    <section class="home" />
 </template>
 <script>
 export default {

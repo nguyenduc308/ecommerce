@@ -1,0 +1,255 @@
+// component right
+
+.input-password{
+    padding-right: 6rem;
+}
+.menuright {
+    background-color: blue;
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    padding-top: 35vh;
+}
+// component left
+.pageLoginleft {
+    background-color: white;
+    padding-left: 13vh;
+    padding-right: 12vh;
+    // image logo
+    &__imageLogo {
+        margin-top: 6.5rem;
+    }
+    // icon right input
+    .iconright {
+        position: relative;
+        // top: 30px;
+        right: 2.5rem;
+        top: -4.8rem;
+        float: right;
+    }
+
+    h1 {
+        color: blue;
+        font-family: "Roboto";
+        font-size: 3.6rem;
+        font-weight: 700;
+        margin-top: 12.1rem;
+    }
+    h5 {
+        color: black-russian;
+        font-family: "Roboto";
+        font-size: font-size-15;
+        font-weight: font-weight-400;
+        line-height: 2.6rem;
+        margin-left: 1.5rem;
+        margin-bottom: 3.9rem;
+        margin-top: 0.7rem;
+    }
+    // lable input username,password
+    &__label {
+        color: nerro;
+        font-family: "RobotoMedium";
+        font-size: font-size-15;
+        font-weight: font-weight-500;
+        // margin-top: 2rem;
+    }
+    //btnLogin
+    .btnLogin{
+        margin-top: -1.4rem;
+    }
+    // icon left input
+    .iconleft {
+        position: relative;
+        // top: 30px;
+        left: 2rem;
+        top: -3.9rem;
+    }
+    // input forcus text
+    input[type="text"]:focus {
+        outline: none; /* Remove default outline and use border or box-shadow */
+        box-shadow: 0 0 0 1px blue; /* Full freedom. (works also with border-radius) */
+    }
+    // forcus input password
+    input[type="password"]:focus {
+        outline: none; /* Remove default outline and use border or box-shadow */
+        box-shadow: 0 0 0 1px blue;
+    }
+    // input text and password
+    input[type="text"],
+    input[type="password"] {
+        border: 0.1rem; /* Remove default borders */
+        height: 5.3rem;
+        border-radius: 0.8rem;
+        border: 1px solid white-smoke;
+        background-color: white;
+        width: 100%;
+        padding-left: 5rem;
+    }
+}
+// id pageLogin
+#pageLogin {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+// set min-height:400px and max-height:800px
+@media (min-height: 400px) and (max-height: 800px) {
+    // component right
+    .menuright {
+        background-color: blue;
+        width: 100%;
+        min-height: 100vh;
+        text-align: center;
+        &__img {
+            width: 80vh;
+            height: 80vh;
+            margin-top: -30vh;
+        }
+        // padding-top: -20vh;
+    }
+    // component left
+    .pageLoginleft {
+        background-color: white;
+        padding-left: 15vh;
+        padding-right: 15vh;
+        // image logo
+        &__imageLogo {
+            margin-top: 3.1rem;
+        }
+        h1 {
+            color: blue;
+            font-family: "Roboto";
+            font-size: 3.6rem;
+            font-weight: 700;
+            margin-top: 3.2rem;
+        }
+        h5 {
+            color: black-russian;
+            font-family: "Roboto";
+            font-size: font-size-15;
+            font-weight: font-weight-400;
+            line-height: 2.6rem;
+            margin-left: 1.5rem;
+            margin-bottom: 5rem;
+            margin-top: 0.7rem;
+        }
+        &__label {
+            color: nerro;
+            font-family: "RobotoMedium";
+            font-size: font-size-15;
+            font-weight: font-weight-500;
+            margin-top: -0.5rem;
+        }
+    }
+}
+// set max-width:575px
+@media screen and (max-width: 575px) {
+    // component left
+    .pageLoginleft {
+        background-color: white;
+        padding-left: 5vh;
+        padding-right: 5vh;
+        // image logo
+        h1 {
+            color: blue;
+            font-family: "Roboto";
+            font-size: 3.6rem;
+            font-weight: 700;
+            margin-top: 3.2rem;
+        }
+        &__imageLogo {
+            margin-top: 3.1rem;
+            margin-left: 1rem;
+        }
+    }
+    // component-right
+    .menuright {
+       display: none;
+    }
+}
+@media only screen and (max-width: 767.98px) {
+    // component left
+
+.input-password{
+    padding-right: 4.5rem;
+}
+    .pageLoginleft {
+        background-color: #fff;
+        padding-right: -5vh;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 30px;
+        margin-right: 30px;
+        .iconright {
+            position: relative;
+            // top: 30px;
+            right: .5rem;
+            top: -5rem;
+            float: right;
+        }
+        // image logo
+        h1 {
+            color: blue;
+            font-family: "Roboto";
+            font-size: 3.6rem;
+            font-weight: 700;
+            margin-top: 3.2rem;
+        }
+        &__imageLogo {
+            margin-top: 3rem;
+            margin-left: 1rem;
+        }
+    }
+    // component-right
+    .menuright {
+        background-color: blue;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        margin-top: 3rem;
+        &__img {
+            width: 50vh;
+            height: 50vh;
+            margin-top: -10vh;
+        }
+
+    }
+}
+
+// min
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    // component right
+    .menuright {
+        background-color: blue;
+        width: 100%;
+        min-height: 100vh;
+        text-align: center;
+        // padding-top: -30vh;
+        &__img {
+            width: 60vh;
+            height: 60vh;
+            margin-top: -20vh;
+        }
+    }
+    // component left
+    .pageLoginleft {
+        background-color: white;
+        padding-left: 3rem;
+        padding-right: 2.8rem;
+        // width: 100%;
+        // image logo
+        // image logo
+        h1 {
+            color: blue;
+            font-family: "Roboto";
+            font-size: 3.6rem;
+            font-weight: 700;
+            margin-top: 3.2rem;
+        }
+        &__imageLogo {
+            margin-top: 3.1rem;
+            margin-left: 1rem;
+        }
+    }
+}
+

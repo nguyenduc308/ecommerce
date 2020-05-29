@@ -6,7 +6,6 @@ export default {
     namespaced: true,
     state: {
         userAuth: null,
-        
     },
     getters,
     actions,

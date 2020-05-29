@@ -18,24 +18,31 @@ export default {
     ],
     script: [
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js' },
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js' },
-      { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js' }
+      { src: 'https://code.jquery.com/jquery-2.1.3.min.js' },
+      { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js' },
+      {src: 'https://apis.google.com/js/api.js', async: true, defer: true},
+      {src: 'https://www.bugherd.com/sidebarv2.js?apikey=ydbtuozvnzkvjst0cd9hiw', async: true},
+      { src: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' },
       
+        
     ]
 },
   /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-  /*
   ** Global CSS
   */
-  css: [
-  ],
+ css: [
+  //'bootstrap/dist/css/bootstrap.min.css',
+  'font-awesome/css/font-awesome.min.css',
+  '~/assets/scss/main.scss'   
+],
+  /*
+  ** Customize the progress-bar color
+  */
+ loading: false,
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
+  plugins: [ 
   ],
   /*
   ** Nuxt.js dev-modules

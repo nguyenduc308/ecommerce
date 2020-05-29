@@ -1,0 +1,102 @@
+    .user-menu {
+    
+        @media only screen and (min-width: 1201px) {
+            display: none;
+        }
+        @media only screen and (max-width: 1800px) {
+            &__checkbox {
+                display: none;
+            }
+            &__button {
+                top: 1.3rem;
+                width: 4rem;
+                height: 4rem;
+                background-color: $color-menu-primary;
+                border-radius: 1rem;
+                cursor: pointer;
+            }
+            &__icon {
+                margin-top: 45%;
+                transform: translateX(.5rem);
+                position: relative;
+                &,
+                &::after,
+                &::before {
+                    height: 2px;
+                    width: 3rem;
+                    background-color: $white;
+                    display: inline-block;
+                    transition: all .2s;
+                }
+                &::after,
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                }
+                &::before {
+                    top: -.7rem;
+                }
+                &::after {
+                    top: .7rem;
+                }
+            }
+            &__button:hover &__icon::before {
+                top: -1rem;
+            }
+            &__button:hover &__icon::after {
+                top: 1rem;
+            }
+            &__button:focus &__icon::before {
+                transform: rotate(45deg);
+            }
+            &__checkbox:checked+&__button &__icon {
+                background-color: transparent;
+            }
+            &__checkbox:checked+&__button &__icon::before {
+                transform: rotate(135deg);
+                top: 0;
+            }
+            &__checkbox:checked+&__button &__icon::after {
+                transform: rotate(-135deg);
+                top: 0;
+                right: 0;
+            }
+        }
+    }
+
+    .navigation {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        padding-right: 3rem;
+        &__nav {
+            position: fixed;
+            background-color: $color-menu-primary;
+            height: auto;
+            top: 5rem;
+            left: 1rem;
+            z-index: 100;
+            border-radius: 3px;
+        }
+        &__list {
+            list-style: none;
+        }
+        &__item {
+            padding: 2rem;
+            &:hover {
+                background-color: $color-active;
+            }
+        }
+        &__link {
+            &:link,
+            &:visited {
+                color: $white;
+                font-size: 1.6rem;
+                font-family: 'RobotoMedium';
+                font-weight: 500;
+                text-decoration: none;
+            }
+        }
+    }
+    

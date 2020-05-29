@@ -4,7 +4,6 @@ import Login from '../components/Login/Login'
 import Register from '../components/Register/Register'
 import Home from '../components/Home/HomeIndex'
 import Category from '../components/Admin/Category/Category'
-import CategoryEdit from '../components/Admin/Category/CategoryEdit'
 Vue.use(Router)
 
 const router =  new Router({
@@ -19,11 +18,6 @@ const router =  new Router({
       name:'Category',
       path:'/admin/category',
       component:Category
-    },
-    {
-      name:'Category',
-      path:'/admin/category/edit',
-      component:CategoryEdit
     },
     {
       name:'Login',

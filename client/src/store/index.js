@@ -7,56 +7,8 @@ export const store  = new VueX.Store({
     state: {
         token: localStorage.getItem('token') || null,
         currentUser : {},
-        product: [
-            {
-                id:1459938,
-                name:'SAM Ú NU',
-                price:'12.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/05/96831557_1629904870490924_6197798263811211264_o-270x270.jpg'
-            },
-            {
-                id:1459938,
-                name:'ĐÀN MÈO ANH LÔNG NGẮN',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/05/96412481_1628147887333289_7452454675938279424_o-270x270.jpg'
-            },
-            {
-                id:1459938,
-                name:'POODLE TRẮNG',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/05/95341625_1622733514541393_5929136385725300736_o-270x270.jpg'
-            },
-            {
-                id:1459938,
-                name:'HUSKY SIÊU CUTE',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/05/95168083_1619595481521863_3931317646317846528_o-200x200.jpg'
-            },
-            {
-                id:1459938,
-                name:'ĐÀN MÈO ANH LÔNG NGẮN',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/02/c1-270x270.jpg'
-            },
-            {
-                id:1459938,
-                name:'EM MÈO TAI CỤP XINH XINH',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/02/b1-300x300.jpg'
-            },
-            {
-                id:1459938,
-                name:'CÔNG CHÚA MÈO TAI CỤP',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/02/a2-270x270.jpg'
-            },
-            {
-                id:1459938,
-                name:'HUSKY SIÊU CUTE',
-                price:'13.000.000đ',
-                img:'https://matpetfamily.com/wp-content/uploads/2020/05/95168083_1619595481521863_3931317646317846528_o-200x200.jpg'
-            }
-        ]
+        product: [],
+        listCategory:[]
     },
     getters: {
 
@@ -67,6 +19,9 @@ export const store  = new VueX.Store({
         },
         SET_CURRENT_USER (state, user){
             state.currentUser = user
+        },
+        GET_CATEGORY(state,listCategory){
+            state.listCategory = listCategory
         }
     },
     actions: {
@@ -106,6 +61,63 @@ export const store  = new VueX.Store({
                 .catch((error) =>{
                     reject(error)
                 })
+            })
+        },
+        GET_CATEGORY({commit} , payload){
+            commit('GET_CATEGORY',payload)
+        },
+        CREATE_CATEGORY({commit} , payload) {
+            const url ='http://localhost:8000/api/categories/'
+            const header = {
+                headers :{
+                    Authorization :'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1ODg3ODYsImV4cCI6MTk1MDU4ODc4Nn0.RHInGHppwvp3wjVC9Rf5cxqS-pyeCtUQ8wVsJZgom3w'
+                }
+            }
+            const data ={
+                name :payload.name
+            }
+            return new Promise ((resolve, reject) =>{
+                axios.post(url , data,header)
+                .then((res) =>{
+                    resolve(res)
+                })
+                .catch((err) =>{
+                    reject(err)
+                })
+            })
+        },
+        DELETE_CATEGORY({commit} , payload){
+            const url =`http://localhost:8000/api/categories/${payload.slug}`
+            const header = {
+                headers :{
+                    Authorization :'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1ODg3ODYsImV4cCI6MTk1MDU4ODc4Nn0.RHInGHppwvp3wjVC9Rf5cxqS-pyeCtUQ8wVsJZgom3w'
+                }
+            }
+            return new Promise ((resolve, reject) =>{
+                axios.delete(url,header)
+                .then((res) =>{
+                    resolve(res)
+                })
+                .catch((err) =>{
+                    reject(err)
+                })
+            })
+        },
+        EDIT_CATEGORY({commit} , payload){
+            const url =`http://localhost:8000/api/categories/${payload.slug}`
+            const header = {
+                headers :{
+                    Authorization :'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1ODg3ODYsImV4cCI6MTk1MDU4ODc4Nn0.RHInGHppwvp3wjVC9Rf5cxqS-pyeCtUQ8wVsJZgom3w'
+                }
+            }
+            return new Promise((resolve, reject) =>{
+                axios.patch(url,header)
+                    .then((res) =>{
+                        resolve(res)
+                    })
+                    .catch((err) =>{
+                        reject(err)
+                    })
             })
         }
     }

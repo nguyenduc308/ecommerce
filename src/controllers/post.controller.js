@@ -35,9 +35,10 @@ module.exports.getPosts = async (req, res) => {
         const posts = await Post.find()
                                 .populate('categories')
                                 .populate('author', '_id userId firstName, lastName')
+                                .sort({'createdAt': -1})
                                 .limit(limit)
                                 .skip(limit*(pages-1));
-                                
+
         return res.status(200).json({
             posts
     })

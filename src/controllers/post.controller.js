@@ -22,10 +22,22 @@ module.exports.getPost = async (req, res) => {
     }
 }
 module.exports.getPosts = async (req, res) => {
+
+    let { pages = 1, limit = 10 } = req.query;
+    pages = +pages;
+    limit = +limit;
+    if(isNaN(pages) || isNaN(limit)) {
+        res.status(400).json({
+            error: "Invalid pages or limit"
+        })
+    }
     try {
         const posts = await Post.find()
                                 .populate('categories')
-                                .populate('author', '_id userId firstName, lastName');
+                                .populate('author', '_id userId firstName, lastName')
+                                .limit(limit)
+                                .skip(limit*(pages-1));
+                                
         return res.status(200).json({
             posts
     })

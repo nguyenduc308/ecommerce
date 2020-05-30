@@ -20,15 +20,20 @@ mongoose.connect('mongodb+srv://admin:abc123!@ecomerce-a9ij9.mongodb.net/ecomerc
     .then(()=> console.log('Database connected!'))
     .catch((error)=> console.error(error));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  next();
+})
+
 app.use(morganChalk)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); 
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-    next();
-})
+
+// app.use(express.static(__dirname));
+app.use("/images", express.static("uploads/images"))
+
 app.use(function (error, req, res, next) {
     if(error instanceof SyntaxError) {
       return res.status(500).send({data : "Invalid data"});

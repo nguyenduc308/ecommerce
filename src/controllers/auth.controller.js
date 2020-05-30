@@ -29,7 +29,7 @@ module.exports.register = async (req, res) => {
                 return res.status(201).json(
                     {
                     token, 
-                    user: _.pick(newUser, ['email', 'firstName','lastName', 'userId', 'phoneNumber', 'createdAt', 'updatedAt'])
+                    user: _.pick(newUser, ['email', 'firstName','lastName', 'userId', 'phoneNumber', 'createdAt', 'updatedAt', 'avatarImageUrl'])
                     });
             })
 
@@ -59,7 +59,7 @@ module.exports.login = async (req, res) => {
                 if(error) return  res.status(500).json({error: "Server error 2"})
                 return res.status(201).json({
                     token, 
-                    user: _.pick(user, ['email', 'firstName','lastName', 'userId', 'phoneNumber', 'createdAt', 'updatedAt']),
+                    user: _.pick(user, ['email', 'firstName','lastName', 'userId', 'phoneNumber', 'createdAt', 'updatedAt', 'avatarImageUrl']),
                 });
             })
     } catch (error) {

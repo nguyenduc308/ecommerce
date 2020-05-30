@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { routers } from "./router";
 import PrivateRoute from "./router/PrivateRoute";
 import { useSelector } from "react-redux";
+import EditCategory from "./pages/Admin/Category/EditCategory";
 import "./assets/scss/sb-admin-2.scss";
 // import HomePage from "./pages/HomePage";
 function App() {
@@ -34,6 +35,11 @@ function App() {
               );
             }
           })}
+        {/* <Route
+          exact
+          path="/admin/category/edit/:slug"
+          component={EditCategory}
+        /> */}
       </Switch>
     </div>
   );

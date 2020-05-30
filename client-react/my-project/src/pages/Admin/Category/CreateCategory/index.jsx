@@ -1,30 +1,26 @@
+import { FastField, Form, Formik } from "formik";
 import React from "react";
-import InputField from "../../../../components/Admin/InputField";
-import * as Yup from "yup";
-import Topbar from "../../../../components/Admin/Navigation/Topbar";
-import Sidebar from "../../../../components/Admin/Navigation/Sidebar";
-// import { Link } from "react-router-dom";
-import PATHS from "../../../../contants/paths";
-import { createCategory } from "../../../../actions";
-import PageHeading from "../../../../components/Admin/PageHeading";
-import { Formik, Form, FastField } from "formik";
-import { Button } from "reactstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Button } from "reactstrap";
+import * as Yup from "yup";
+import {
+  createCategory,
+  fetchCategorys,
+  hideLoading,
+  showLoading,
+} from "../../../../actions";
+import InputField from "../../../../components/Admin/InputField";
+import Sidebar from "../../../../components/Admin/Navigation/Sidebar";
+import Topbar from "../../../../components/Admin/Navigation/Topbar";
+import PageHeading from "../../../../components/Admin/PageHeading";
+import Loading from "../../../../components/Loading";
+import PATHS from "../../../../contants/paths";
 function CreateCategory(props) {
-  // const formik = useFormik({
-  //   initialValues: {
-  //     name: "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     ctName: Yup.string().required("Bạn không được để trống"),
-  //   }),
-  //   onSubmit: (values) => {
-  //     // console.log(values);
-  //   },
-  // });
+  const isLoading = useSelector((state) => state.loading.isLoading);
   const dispatch = useDispatch();
   const history = useHistory();
+
   return (
     <div>
       <div id="wrapper">
@@ -54,7 +50,15 @@ function CreateCategory(props) {
                         ),
                       })}
                       onSubmit={(values) => {
-                        dispatch(createCategory(values));
+                        dispatch(showLoading());
+                        dispatch(createCategory(values))
+                          .then((res) => {
+                            dispatch(fetchCategorys());
+                            dispatch(hideLoading());
+                          })
+                          .catch((error) => {
+                            dispatch(hideLoading());
+                          });
                         history.push(PATHS.CATEGORY);
                       }}
                     >
@@ -72,6 +76,7 @@ function CreateCategory(props) {
                       )}
                     </Formik>
                   </div>
+                  <Loading isLoading={isLoading} />
                 </div>
               </div>
               <div className="row">

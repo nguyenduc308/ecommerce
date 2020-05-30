@@ -31,10 +31,10 @@ export const login = (data) => async (dispatch) => {
         storage.setToken(data.token);
         return dispatch(loginSuccess(data.token));
       }
-    })
-    .catch((err) => {
-      return dispatch(loginFail(err.message));
     });
+  // .catch((err) => {
+  //   return dispatch(loginFail(err.message));
+  // });
 };
 
 //Logout
@@ -86,37 +86,88 @@ export const fetchCategorys = () => async (dispatch) => {
     payload: res.data,
   });
 };
-export const createCategory = (data) => async (dispatch) => {
-  // var config = {
-  //   headers: { authorization: token },
-  // };
-  // const config = (callApi().defaults.headers.common["Authorization"] = token);
+
+export const fetchCategory = (slug) => async (dispatch) => {
   var token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1OTk5MTksImV4cCI6MTk1MDU5OTkxOX0.IfKIi8bIicLh4aK_4P9H4hAe66sag296s6qXLUmQm8U";
-  const res = await callApi().post("/categories/", data, {
+  const res = await callApi().get(`/categories/${slug}`, {
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
     },
   });
 
-  await dispatch({
-    type: types.ADD_CATEGORY,
+  dispatch({
+    type: types.FETCH_CATEGORY,
     payload: res.data,
   });
 };
-// export const deleteCategory = (slug) => async (dispatch) => {
-//   var token =
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1OTk5MTksImV4cCI6MTk1MDU5OTkxOX0.IfKIi8bIicLh4aK_4P9H4hAe66sag296s6qXLUmQm8U";
-//   const res = await callApi().delete(`/categories/:${slug}`, {
-//     headers: {
-//       Authorization: token,
-//       "Content-Type": "application/json",
-//     },
-//   });
 
-//   await dispatch({
-//     type: types.DELETE_CATEGORY,
-//     payload: slug,
-//   });
-// };
+export const createCategory = (category) => async (dispatch) => {
+  // var config = {
+  //   headers: { authorization: token },
+  // };
+  // const config = (callApi().defaults.headers.common["Authorization"] = token);
+  var token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1OTk5MTksImV4cCI6MTk1MDU5OTkxOX0.IfKIi8bIicLh4aK_4P9H4hAe66sag296s6qXLUmQm8U";
+  const res = await callApi().post("/categories/", category, {
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+  });
+  // .then(({ data }) =>
+  //   Promise.all([
+  //     dispatch({ type: types.ADD_CATEGORY, payload: data }),
+  //     dispatch({ type: types.FETCH_CATEGORYS, payload: data }),
+  //   ])
+  // );
+  // .then(({ data }) => {
+  //   dispatch({ type: types.ADD_CATEGORY, payload: data });
+  //   dispatch({ type: types.FETCH_CATEGORYS, payload: data });
+  // });
+
+  dispatch({
+    type: types.ADD_CATEGORY,
+    payload: res.data,
+  });
+  // dispatch({
+  //   type: types.FETCH_CATEGORYS,
+  //   payload: res.data,
+  // });
+};
+
+export const editCategory = (category) => async (dispatch) => {
+  var token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1OTk5MTksImV4cCI6MTk1MDU5OTkxOX0.IfKIi8bIicLh4aK_4P9H4hAe66sag296s6qXLUmQm8U";
+  const res = await callApi().patch(`/categories/${category.slug}`, category, {
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+  });
+
+  dispatch({
+    type: types.EDIT_CATEGORY,
+    payload: res.data,
+  });
+};
+
+export const deleteCategory = (slug) => async (dispatch) => {
+  var token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1OTk5MTksImV4cCI6MTk1MDU5OTkxOX0.IfKIi8bIicLh4aK_4P9H4hAe66sag296s6qXLUmQm8U";
+  const res = await callApi()
+    .delete(`/categories/${slug}`, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    })
+    .then(({ data }) => {
+      if (data.error && data.status === 500) {
+        console.log(data.error[0]);
+      } else {
+        return dispatch({ type: types.DELETE_CATEGORY, payload: slug });
+      }
+    });
+};

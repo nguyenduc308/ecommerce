@@ -1,50 +1,29 @@
 import React, { useEffect } from "react";
-import Topbar from "../../../components/Admin/Navigation/Topbar";
-import Sidebar from "../../../components/Admin/Navigation/Sidebar";
-import { Table, Button } from "reactstrap";
-// import CardInfo from "../../components/Cards/Info";
-// import ChartDonut from "../../components/Charts/Donut";
-// import ChartLine from "../../components/Charts/Line";
-import { fetchCategorys, deleteCategory } from "../../../actions";
-import PageHeading from "../../../components/Admin/PageHeading";
-import { Link } from "react-router-dom";
-import PATHS from "../../../contants/paths";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Table } from "reactstrap";
+import { fetchCategorys, hideLoading, showLoading } from "../../../actions";
+import Sidebar from "../../../components/Admin/Navigation/Sidebar";
+import Topbar from "../../../components/Admin/Navigation/Topbar";
+import PageHeading from "../../../components/Admin/PageHeading";
+import Loading from "../../../components/Loading";
+import PATHS from "../../../contants/paths";
+import ShowCategory from "./ShowCategory";
 // import callApi from "../../../utils/callApi";
 function Category() {
   const dispatch = useDispatch();
+  const category = useSelector((state) => state.category.category.categories);
+  const isLoading = useSelector((state) => state.loading.isLoading);
   useEffect(() => {
-    dispatch(fetchCategorys());
+    dispatch(showLoading());
+    dispatch(fetchCategorys())
+      .then((res) => {
+        dispatch(hideLoading());
+      })
+      .catch((error) => {
+        dispatch(hideLoading());
+      });
   }, []);
-  const category = useSelector((state) => state.category);
-  if (category.categories) {
-    var elements = category.categories.map((category) => {
-      return (
-        <tbody key={category._id}>
-          <tr>
-            <td>{category._id}</td>
-            <td>{category.name}</td>
-            <td>{category.slug}</td>
-            <td>
-              {/* <Link
-                to={`${PATHS.EDITCATEGORY}/${category._id}`}
-                className="btn btn-success mr-3"
-              >
-                Sửa
-              </Link> */}
-              {/* <Button
-                variant="danger"
-                onClick={dispatch(deleteCategory(category.slug))}
-              >
-                Xóa
-              </Button> */}
-            </td>
-          </tr>
-        </tbody>
-      );
-    });
-  }
-
   return (
     <div>
       <div id="wrapper">
@@ -77,8 +56,14 @@ function Category() {
                       <th>Thao Tác</th>
                     </tr>
                   </thead>
-                  {elements}
+                  {category &&
+                    category.map((category) => {
+                      return (
+                        <ShowCategory key={category._id} category={category} />
+                      );
+                    })}
                 </Table>
+                <Loading isLoading={isLoading} />
               </div>
               <div className="row">
                 <div className="col-xl-8 col-lg-6">{/* <ChartLine /> */}</div>

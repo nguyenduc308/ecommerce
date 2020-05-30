@@ -8,7 +8,7 @@ const PATHS = {
   CARDS: "/admin/cards",
   CATEGORY: "/admin/category",
   CREATECATEGORY: "/admin/category/new",
-  EDITCATEGORY: "/admin/category/edit",
+  EDITCATEGORY: "/admin/category/edit/:slug",
 };
 export default PATHS;
 

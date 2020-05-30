@@ -2,5 +2,4 @@ node_modules
 client/node_modules
 client-vue/node_modules
 client-react/node_modules
-upload/images/avatars/*
-upload/images/others/*
+src/uploads/images/avatars/

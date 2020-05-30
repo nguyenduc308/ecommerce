@@ -10,11 +10,11 @@ module.exports.uploadImage = (type, req, res, next) => {
 
       let math = ["image/png", "image/jpeg", "image/gif"];
       if (math.indexOf(file.mimetype) === -1) {
-        
+
         let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png or gif`;
         return cb(errorMess, null);
       }
-      let filename = `${Date.now()}-trungquandev-${file.originalname}`;
+      let filename = `${Date.now()}-${file.originalname}`;
       return cb(null, filename);
     }
   })

@@ -2,11 +2,15 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const MediaSchema = new mongoose.Schema({
-    userId: {
+    postBy: {
         type: ObjectId,
         ref: 'User'
     },
     url: {
+        type: String,
+        required: true
+    },
+    fileName: {
         type: String,
         required: true
     },

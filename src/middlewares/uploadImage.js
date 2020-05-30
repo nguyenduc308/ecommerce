@@ -3,17 +3,11 @@ const multer = require("multer");
 
 module.exports.uploadImage = (type) => {
   const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination(req, file, cb) {
       cb(null, `./src/uploads/images/${type}s`);
     },
-    filename: function (req, file, cb) {
+    filename(req, file, cb)  {
 
-      let mustMatchs = ["image/png", "image/jpeg", "image/gif"];
-      if (mustMatchs.indexOf(file.mimetype) === -1) {
-
-        let errorMess = `File type does not support !`;
-        return cb(errorMess, null);
-      }
       let filename = `${Date.now()}-${file.originalname}`;
       return cb(null, filename);
     }

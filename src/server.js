@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require ('morgan');
 const chalk = require ('chalk');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 8000;
+
 
 const  morganChalk = morgan(function (tokens, req, res) {
     return [
@@ -32,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // app.use(express.static(__dirname));
-app.use("/images", express.static("uploads/images"))
+app.use("/media", express.static(path.join(__dirname,"uploads")))
 
 app.use(function (error, req, res, next) {
     if(error instanceof SyntaxError) {

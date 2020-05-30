@@ -1,5 +1,7 @@
-const { User } = require('../models/User.model');
 const _ = require('lodash');
+const { User } = require('../models/User.model');
+const { Media } = require('../models/Media.model');
+
 module.exports.getUser = async (req, res) => {
     const { userId } = req.params;
 
@@ -29,15 +31,28 @@ module.exports.getUsers = async (req, res) => {
 
 module.exports.uploadAvatar = async (req, res, next) => {
     const { userId } = req.params;
-    
+    const typesMustMatch = ['image/jpeg', 'image/jpeg']
+    if(!typesMustMatch.includes(req.file.mimetype)) {
+        return res.status(400).json({error: "The type of file does not support !"})
+    }
+    const mediaPath = `media/images/others/${req.file.filename}`;
+    const [mediaType] = req.file.mimetype.split('/');
+
     try {
-        let user = await User.findOne({userId}).select("-password")
-        if (!user) return res.status(404).json({ error: "User not found" })
-        console.log(req.error)
-        if(req.file === 'false') {
-            return res.status(400).json({ error: "File type does not support!" })
-        }
-        user.avatarImageUrl = req.file.path;
+        let user = await User.findOne({userId}).select("-password");
+        if (!user) return res.status(404).json({ error: "User not found" });
+        
+        const newMedia = new Media({
+            mediaType,
+            fileName: req.file.filename,
+            postBy: req.user.id,
+            url: mediaPath,
+            format: req.file.mimetype,
+            
+        });
+        const {url} = await newMedia.save()
+
+        user.avatarImageUrl = url;
         user = await user.save();
         return res.status(200).json({
             user

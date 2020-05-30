@@ -63,3 +63,15 @@ module.exports.getAllMedia = async (req, res) => {
     }
 }
 
+module.exports.getMedia = async (req, res) => {
+    const { id } = req.params
+    try {
+        const media = await Media.findById(id);
+        return res.status(200).json(media)
+    } catch (error) {
+        return res.status(500).json({
+            error: "Server error"
+        })
+    }
+}
+

@@ -23,4 +23,10 @@ router.get(
     authorized([1000]),
     getAllMedia
 )
+router.get(
+    '/:id',
+    auth,
+    authorized([1000]),
+    getMedia
+)
 module.exports = router;

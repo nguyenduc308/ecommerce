@@ -110,14 +110,14 @@ export const store  = new VueX.Store({
                     Authorization :'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYzY4OGM2MjgwNDFjMWQ3Y2FkZjBlMSIsInVzZXJUeXBlIjoxMDAwLCJpYXQiOjE1OTA1ODg3ODYsImV4cCI6MTk1MDU4ODc4Nn0.RHInGHppwvp3wjVC9Rf5cxqS-pyeCtUQ8wVsJZgom3w'
                 }
             }
-            return new Promise((resolve, reject) =>{
+            return new Promise ((resolve, reject) =>{
                 axios.patch(url,header)
-                    .then((res) =>{
-                        resolve(res)
-                    })
-                    .catch((err) =>{
-                        reject(err)
-                    })
+                .then((res) =>{
+                    resolve(res)
+                })
+                .catch((err) =>{
+                    reject(err)
+                })
             })
         }
     }

@@ -46,12 +46,14 @@
             <span class="closeModalCreate" @click="closeModalCreate">X</span>
             <input 
             type="text" 
-            class="category__input" 
+            class="category__input form-control" 
             placeholder="Name Category"
-            v-model="nameCategory"
+            v-model ="nameCategory"
             >
+            <div class="invalid-feedback">
+            </div>
             <button 
-            class="btn btn-primary"
+            class="btn btn-primary btn-save"
             @click="createCategory"
             >
             Tạo mới
@@ -66,7 +68,7 @@
             placeholder="Name Category"
             >
             <button 
-            class="btn btn-primary"
+            class="btn btn-primary btn-save"
             @click="EditCategory"
             >
             Sửa Category
@@ -81,7 +83,6 @@ import Control from '../Control/AdminControl'
 import Navbar from '../Navbar/AdminNavbar'
 import ModalLoader from '../../Modal/ModalLoader'
 import axios from 'axios'
-import Vue from 'vue'
 export default {
     data() {
         return {
@@ -118,11 +119,12 @@ export default {
             
         },
         createCategory() {
-            this.loading= true
-            const payload ={
+            if(this.nameCategory.length >3){
+                this.loading= true
+                const payload ={
                 name:this.nameCategory
-            }
-            this.$store.dispatch('CREATE_CATEGORY',payload)
+                }
+                this.$store.dispatch('CREATE_CATEGORY',payload)
                 .then((res) =>{
                     this.loading = false
                     this.closeModalCreate()
@@ -132,6 +134,10 @@ export default {
                 .catch((err) =>{
                     this.loading= false
                 })
+            }
+            else{
+                alert('Vui lòng nhập đúng ')
+            }
         },
         deleteCategory(category) {
             this.loading= true
@@ -147,9 +153,10 @@ export default {
         },
         EditCategory(){
             const payload = this.categoryEdit
+            console.log(payload);
+            
             this.$store.dispatch('EDIT_CATEGORY',payload)
                 .then((res) =>{
-                    this.getListCategory()
                     console.log(res);
                 })
                 .catch((err) =>{
@@ -201,6 +208,9 @@ button.btn{
 btn.btn-create{
     margin-right: 40px;
 }
+.btn.btn-save{
+    margin-top: 30px;
+}
 .form-create{
     width: 100%;
     margin-top: 20px;
@@ -231,7 +241,7 @@ btn.btn-create{
     border-radius: 8px;
     font-size: 1.8rem;
     padding: 8px 12px;
-    margin-bottom: 20px;
+    
 }
 .closeModalCreate{
     display: block;
@@ -242,5 +252,8 @@ btn.btn-create{
     text-align: right;
     cursor: pointer;
     
+}
+.invalid-feedback{
+    font-size: 1.8rem;
 }
 </style>

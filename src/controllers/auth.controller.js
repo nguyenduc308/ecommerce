@@ -66,3 +66,11 @@ module.exports.login = async (req, res) => {
         return res.status(500).json({error: "Server error"})
     }
 }
+
+module.exports.isAuth = async (req, res) => {
+    try {
+        res.status(200).json({isAuth: true})
+    } catch (error) {
+        return res.status(500).json({error: "Server error"})
+    }
+}

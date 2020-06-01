@@ -1,9 +1,11 @@
-const { validatorLogin, validatorSignUp } = require('../middlewares/authValidator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const { User } = require('../models/User.model');
 const { compare } = require('bcryptjs')
 const shortid = require('shortid');
+
+const { validatorLogin, validatorSignUp } = require('../middlewares/authValidator');
+const { User } = require('../models/User.model');
+const { JWT_SECRET_KEY } = require('../config/env');
 
 module.exports.register = async (req, res) => {
     const { valid, errors } = validatorSignUp(req.body);
@@ -22,7 +24,7 @@ module.exports.register = async (req, res) => {
         const payload = {id: newUser._id, userType: newUser.userType};
         jwt.sign(
             payload, 
-            'A123213123AAAA', 
+            JWT_SECRET_KEY, 
             {expiresIn: 360000000}, 
             (error, token)=> {
                 if(error) return  res.status(500).json({error: "Server error"});
@@ -53,7 +55,7 @@ module.exports.login = async (req, res) => {
 
         jwt.sign(
             payload, 
-            'A123213123AAAA', 
+            JWT_SECRET_KEY, 
             {expiresIn: 360000000}, 
             (error, token)=> {
                 if(error) return  res.status(500).json({error: "Server error 2"})

@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken')
+const { JWT_SECRET_KEY } = require('../config/env');
 
 module.exports.auth = async (req, res, next) => {
     const token = req.headers.authorization;
     if(!token) return res.status(403).json({error: "Auth required"});
     try {
-        const decoded = await jwt.verify(token, "A123213123AAAA")
+        const decoded = await jwt.verify(token, JWT_SECRET_KEY)
         if(!decoded) {
             return res.status(403).json({error: "Auth required"})
         } else {

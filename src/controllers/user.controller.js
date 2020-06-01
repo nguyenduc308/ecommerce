@@ -28,6 +28,17 @@ module.exports.getUsers = async (req, res) => {
         })
     }
 } 
+module.exports.getUserOwnedProfile = async (req, res) => {
+    const { id } = req.user;
+    try {
+        const user = await User.findById(id).select("-password");
+        return res.status(200).json({user});
+    } catch (error) {
+        return res.status(500).json({
+            error: "Server error"
+        })
+    }
+} 
 
 module.exports.uploadAvatar = async (req, res, next) => {
     const { userId } = req.params;

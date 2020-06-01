@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getUser, getUsers, uploadAvatar, addAvatarUrl } = require('../controllers/user.controller')
+const { getUser, getUsers, uploadAvatar, addAvatarUrl, getUserOwnedProfile } = require('../controllers/user.controller')
 const { auth, authorized } = require('../middlewares/auth');
 const { uploadImage } = require('../middlewares/uploadImage');
 
 router.get('/:userId', getUser);
 router.get('/', getUsers);
+router.get('/me', getUserOwnedProfile);
 router.post(
     '/:userId/avatar',
     auth,

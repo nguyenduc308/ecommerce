@@ -30,6 +30,14 @@ const UserSchema = new mongoose.Schema({
     },
     avatarImageUrl: {
         type: String, 
+    },
+    blocked: {
+        type: Boolean,
+        default: false
+    },
+    confirm: {
+        type: Boolean,
+        default: false
     } 
 }, {
     timestamps: true

@@ -4,3 +4,4 @@ client-vue/node_modules
 client-react/node_modules
 src/uploads/images/avatars/*
 src/uploads/images/others/*
+dist

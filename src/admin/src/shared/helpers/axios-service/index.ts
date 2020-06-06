@@ -1,0 +1,1 @@
+export { default as httpAxios } from './axios.services';

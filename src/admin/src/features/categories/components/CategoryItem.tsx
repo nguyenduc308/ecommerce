@@ -1,9 +1,13 @@
 import React, { Fragment } from 'react'
 
-const CategoryItem: React.FC = () => {
+interface Props {
+    category: Category
+}
+
+const CategoryItem: React.FC<Props> = ({category}) => {
     return (
         <Fragment>
-            CategoryItem
+            <p>{category.name}</p>
         </Fragment>
     )
 }

@@ -15,7 +15,7 @@ class AxiosService {
         }
     }
 
-    private handleSuccess(response: AxiosResponse) : AxiosResponse {
+    private handleSuccess(response: AxiosResponse)  {
         return response.data;
     }
     private handlesError(responseError: AxiosError): Promise<AxiosError> {

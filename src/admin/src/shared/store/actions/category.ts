@@ -1,1 +1,0 @@
-export const fetchMock = () => ({type: 'Hello', payload: "Hello"})

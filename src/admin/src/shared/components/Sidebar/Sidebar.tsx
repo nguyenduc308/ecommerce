@@ -4,6 +4,7 @@ import { ShoppingCartOutlined, WindowsOutlined, HeartTwoTone, HomeOutlined } fro
 
 import { SidebarWrapper } from './Sidebar.styled';
 import { useLocation , Link} from 'react-router-dom';
+import { PATHS } from 'config';
 
 const { SubMenu } = Menu;
 
@@ -28,7 +29,7 @@ const Sidebar = () => {
                 forceSubMenuRender={true}
             >
                 <Menu.Item key="/"><HomeOutlined />
-                    <Link to="/">Home</Link>
+                    <Link to={PATHS.HOMEPAGE}>Home</Link>
                 </Menu.Item>
                 <SubMenu
                 key="/categories"
@@ -40,8 +41,12 @@ const Sidebar = () => {
                 }
                 >
                     <Menu.ItemGroup key="g1" title="Management">
-                        <Menu.Item key="/categories"><Link to="/categories">List</Link></Menu.Item>
-                        <Menu.Item key="2">Create</Menu.Item>
+                        <Menu.Item key="/categories">
+                            <Link to={PATHS.CATEGORIES}>List</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={PATHS.CATEGORIES_CREATE}>Create</Link>
+                        </Menu.Item>
                     </Menu.ItemGroup>
                     <Menu.ItemGroup key="g2" title="Analytics">
                     </Menu.ItemGroup>

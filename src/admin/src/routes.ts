@@ -2,7 +2,7 @@
 // import React from 'react';
 
 import { PATHS } from 'config';
-import { CategoriesList } from 'features/categories';
+import { CategoriesList, CategoryCreate } from 'features/categories';
 import { Home } from 'features/Home';
 
 interface IProps {
@@ -21,6 +21,11 @@ const routes: IProps[]  = [
         path: PATHS.CATEGORIES,
         exact: true,
         component: CategoriesList
+    },
+    {
+        path: PATHS.CATEGORIES_CREATE,
+        exact: true,
+        component: CategoryCreate
     },
 ]
 

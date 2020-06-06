@@ -2,6 +2,7 @@ node_modules
 client/node_modules
 client-vue/node_modules
 client-react/node_modules
+client-react-locbro/node_modules
 src/uploads/images/avatars/*
 src/uploads/images/others/*
 dist

@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Row, Col } from 'antd'
+import { ToastContainer } from 'react-toastify';
 
-import { CategoriesList, CategoryDetail } from 'features/categories';
+import routes from 'routes';
 import { Header } from 'shared/components/Header';
 import { Sidebar } from 'shared/components/Sidebar';
 
 import 'antd/dist/antd.less';
+import 'react-toastify/dist/ReactToastify.css';
+
 const App: React.FC = () => {
   return(
   <Fragment>
@@ -17,11 +20,25 @@ const App: React.FC = () => {
           <Sidebar />
         </Col>
         <Col>
-          <CategoriesList />
+          <Switch>
+              {routes.map((route, i) => {
+                return <Route key={i} path={route.path} exact={route.exact} component={route.component} />
+              })}
+          </Switch>
         </Col>
-      </Row>
-      
+      </Row>     
     </Router>
+    <ToastContainer
+      position="bottom-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
   </Fragment>)
 }
 

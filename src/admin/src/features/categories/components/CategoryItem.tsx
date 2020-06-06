@@ -1,13 +1,22 @@
 import React, { Fragment } from 'react'
+import Button from 'antd/lib/button';
 
 interface Props {
-    category: Category
+    category: Category,
+    deleteCategory: deleteCategory
 }
 
-const CategoryItem: React.FC<Props> = ({category}) => {
+const CategoryItem: React.FC<Props> = ({category, deleteCategory}) => {
     return (
         <Fragment>
-            <p>{category.name}</p>
+            <p style={{marginRight: '30px'}}>{category.name}</p> 
+            <Button 
+            type="text" 
+            danger
+            onClick={() => deleteCategory(category.slug)}
+            >
+                Delete
+            </Button>
         </Fragment>
     )
 }

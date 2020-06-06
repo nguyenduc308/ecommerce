@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
 import CategoryItem from '../components/CategoryItem';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
-import { fetchCategories } from 'shared/store/categories/categories.action';
+
+import { List } from 'antd';
+
+import { fetchCategories, fetchDeleteCategory } from 'shared/store/categories/categories.action';
 
 
 const CategoriesList: React.FC = () => {
@@ -12,13 +15,26 @@ const CategoriesList: React.FC = () => {
         dispatch(fetchCategories());
     }, [dispatch]);
 
+    const deleteCategory = (slug: string) => {
+      dispatch(fetchDeleteCategory(slug));
+    }
+
     return (
         <Fragment>
-            {
-                categories && categories.map((category: Category) => {
-                    return <CategoryItem key={category._id} category= {category}/>
-                })
-            }
+            <List
+            header={<h2>Categories List</h2>}
+            bordered
+            dataSource={categories}
+            renderItem={(category:Category, index) => (
+                <List.Item>
+                    <CategoryItem 
+                    key={category._id} 
+                    deleteCategory={deleteCategory} 
+                    category= {category}
+                    />
+                </List.Item>
+            )}
+            />
         </Fragment>
     )
 }

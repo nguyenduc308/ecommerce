@@ -5,7 +5,6 @@ import { httpAxios } from "shared/helpers/axios-service";
 export const fetchCategories = () => async (dispatch: Dispatch) => {
     return httpAxios.get('/categories')
         .then((data : any) => {
-            console.log(data.categories)
             dispatch(getCategoriesSuccess(data.categories))
         })
         .catch(error => {

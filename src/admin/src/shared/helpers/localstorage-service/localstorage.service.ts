@@ -16,7 +16,6 @@ class Storate {
         }
         return null;
     }
-
 }
 
 export default new Storate(localstorage_key);

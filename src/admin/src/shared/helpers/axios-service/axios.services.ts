@@ -10,7 +10,9 @@ class AxiosService {
         this.auth_token = token;
         this.service.interceptors.response.use(this.handleSuccess, this.handlesError);
         this.service.defaults.baseURL = API;
-        this.service.defaults.headers.common['Authorization'] = this.auth_token;
+        if(!!this.auth_token) {
+            this.service.defaults.headers.common['Authorization'] = this.auth_token;
+        }
     }
 
     private handleSuccess(response: AxiosResponse) : AxiosResponse {

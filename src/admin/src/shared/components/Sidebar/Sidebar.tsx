@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 import { ShoppingCartOutlined, WindowsOutlined, HeartTwoTone, HomeOutlined } from '@ant-design/icons';
 
 import { SidebarWrapper } from './Sidebar.styled';
-import { useLocation , Link} from 'react-router-dom';
+import { useLocation , useHistory } from 'react-router-dom';
 import { PATHS } from 'config';
 
 const { SubMenu } = Menu;
@@ -12,27 +12,34 @@ const Sidebar = () => {
     const [selectedKey, setSelectedKey] = useState('/');
 
     const location = useLocation();
+    const history = useHistory();
+
+    const handleClick = (value: any) => {
+        history.push(value.key)
+    }
 
     useEffect(()=> {
         setSelectedKey(location.pathname)
     },[location])
-
+    
     return ( 
         <SidebarWrapper>
              <Menu
                 style={{ width: 256 }}
                 defaultSelectedKeys={[selectedKey]}
-                defaultOpenKeys={['/']}
+                defaultOpenKeys={[selectedKey]}
                 selectedKeys={[selectedKey]}
                 selectable={true}
                 mode="inline"
+                onClick={handleClick}
                 forceSubMenuRender={true}
             >
-                <Menu.Item key="/"><HomeOutlined />
-                    <Link to={PATHS.HOMEPAGE}>Home</Link>
+                <Menu.Item key={PATHS.HOMEPAGE}>
+                    <HomeOutlined />
+                    Home
                 </Menu.Item>
                 <SubMenu
-                key="/categories"
+                key={PATHS.CATEGORIES}
                 title={
                     <span>
                     <WindowsOutlined />
@@ -41,11 +48,11 @@ const Sidebar = () => {
                 }
                 >
                     <Menu.ItemGroup key="g1" title="Management">
-                        <Menu.Item key="/categories">
-                            <Link to={PATHS.CATEGORIES}>List</Link>
+                        <Menu.Item key={PATHS.CATEGORIES}>
+                            List
                         </Menu.Item>
-                        <Menu.Item key="2">
-                            <Link to={PATHS.CATEGORIES_CREATE}>Create</Link>
+                        <Menu.Item key={PATHS.CATEGORIES_CREATE}>
+                            Create
                         </Menu.Item>
                     </Menu.ItemGroup>
                     <Menu.ItemGroup key="g2" title="Analytics">

@@ -1,4 +1,4 @@
-import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY } from "./contants";
+import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY, CREATE_CATEGORY } from "./contants";
 import { fromJS } from 'immutable';
 
 const initialState = fromJS({
@@ -14,6 +14,8 @@ export default (state = initialState, action: Action) => {
             return state.set('error', fromJS(action.payload));
         case DELETE_CATEGORY:
             return state.set('list', state.get('list').filter((o:any) => o.get('slug') !== action.payload));
+        case CREATE_CATEGORY:
+            return state.set('list', fromJS(state.get('list').push(action.payload)))
         default:
             return state;
     }

@@ -1,3 +1,2 @@
-import { httpAxios } from "shared/helpers/axios-service";
-
-httpAxios.get('categories').then(console.log)
+export { default as ProductDetail } from './pages/ProductDetail';
+export { default as ProductsList } from './pages/ProductsList';

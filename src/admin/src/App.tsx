@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import './features/products';
+import { CategoriesList, CategoryDetail } from 'features/categories';
 
 const App: React.FC = () => {
   return <Fragment>
-    Hello
+    <CategoriesList />
+    <CategoryDetail />
   </Fragment>
 }
 

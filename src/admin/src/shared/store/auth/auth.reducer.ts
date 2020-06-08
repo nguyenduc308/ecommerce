@@ -1,9 +1,6 @@
-import { LOGIN_SUCCESS } from "./contansts";
+import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./contansts";
 import { fromJS } from 'immutable';
-import { localstorage_key } from "config";
 import localstorageService from "shared/helpers/localstorage-service/localstorage.service";
-
-const data = JSON.parse(localStorage.getItem(localstorage_key) || "{}")
 
 const initialState = fromJS({
     isAuthenticated: false,
@@ -17,6 +14,16 @@ export default (state = initialState, action: Action) => {
             return {
                 ...state,
                 isAuthenticated: true
+            }
+        case AUTO_LOGIN:
+            return {
+                ...state,
+                isAuthenticated: true
+            }
+        case AUTO_LOGOUT: 
+            return {
+                ...state,
+                isAuthenticated: false
             }
         default:
             return state;

@@ -16,6 +16,9 @@ class Storate {
         }
         return null;
     }
+    setData(data: any):void {
+        localStorage.setItem(this.KEY, JSON.stringify(data));
+    }
 }
 
 export default new Storate(localstorage_key);

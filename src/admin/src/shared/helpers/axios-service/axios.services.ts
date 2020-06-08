@@ -16,7 +16,7 @@ class AxiosService {
     }
 
     private handleSuccess(response: AxiosResponse)  {
-        return response.data;
+        return Promise.resolve(response.data);
     }
     private handlesError(responseError: AxiosError): Promise<AxiosError> {
         return Promise.reject(responseError);

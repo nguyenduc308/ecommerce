@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Row, Col } from 'antd'
 import { ToastContainer } from 'react-toastify';
 
@@ -7,15 +7,32 @@ import routes from 'routes';
 import { Header } from 'shared/components/Header';
 import { Sidebar } from 'shared/components/Sidebar';
 import { Auth } from 'features/auth';
+import { useDispatch } from 'react-redux';
 
 import 'antd/dist/antd.less';
 import 'react-toastify/dist/ReactToastify.css';
+import localstorageService from 'shared/helpers/localstorage-service/localstorage.service';
+import { autoLogin, autoLogout } from 'shared/store/auth/auth.action';
 
 const App: React.FC = () => {
+  let [isAuthenticated, setAuthenticate] = useState(false)
+  const dispatch = useDispatch();
+  const token = localstorageService.token;
+
+  useEffect(()=> {
+    if(!!token) {
+      setAuthenticate(true)
+      dispatch(autoLogin);
+    } else {
+      setAuthenticate(false)
+      dispatch(autoLogout);
+    }
+  }, [token])
   return(
   <Fragment>
     <Router>
-      <div style={{display: 'none'}}>
+      {!isAuthenticated  && <Redirect to='/auth/login' />}
+      {isAuthenticated && <div>
         <Header />
         <Row>
           <Col>
@@ -25,19 +42,22 @@ const App: React.FC = () => {
             <Switch>
                 {routes.map((route, i) => {
                   return <Route 
-                            key={i} 
-                            path={route.path} 
-                            exact={route.exact} 
-                            component={route.component} 
-                          />
+                  key={i} 
+                  path={route.path} 
+                  exact={route.exact} 
+                  render={props => {
+                    return !isAuthenticated  ? (<Redirect to='/login' />) : (<route.component {...props} />)}
+                  }
+                  />
                 })}
+                <Redirect exact from='/login' to='/auth/login' />
             </Switch>
           </Col>
         </Row>   
-      </div>
-      <div>
+      </div>}
+      {!isAuthenticated && <div>
           <Route path="/auth" component={Auth}/>
-      </div>
+      </div>}
     </Router>
     <ToastContainer
       position="bottom-right"

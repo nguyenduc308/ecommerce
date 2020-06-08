@@ -3,7 +3,7 @@
 
 import { PATHS } from 'config';
 import { CategoriesList, CategoryCreate } from 'features/categories';
-import { Home } from 'features/Home';
+import { Home } from 'features/home';
 
 interface IProps {
     exact?: boolean;

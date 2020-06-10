@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
 import Button from 'antd/lib/button';
 
 interface Props {
-    category: Category,
-    deleteCategory: deleteCategory
+    category: Category;
+    deleteCategory: deleteCategory;
 }
 
 const CategoryItem: React.FC<Props> = ({category, deleteCategory}) => {

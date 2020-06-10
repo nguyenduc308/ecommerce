@@ -13,11 +13,13 @@ import 'antd/dist/antd.less';
 import 'react-toastify/dist/ReactToastify.css';
 import localstorageService from 'shared/helpers/localstorage-service/localstorage.service';
 import { autoLogin, autoLogout } from 'shared/store/auth/auth.action';
+// import Spinner from 'shared/components/spinner';
 
 const App: React.FC = () => {
   let [isAuthenticated, setAuthenticate] = useState(false)
   const dispatch = useDispatch();
   const token = localstorageService.token;
+  // const loading = useSelector((state: any) => state.app.get('loading'));
 
   useEffect(()=> {
     if(!!token) {
@@ -70,6 +72,7 @@ const App: React.FC = () => {
       draggable
       pauseOnHover
     />
+    {/* {loading && <Spinner /> } */}
   </Fragment>)
 }
 

@@ -19,6 +19,7 @@
     "antd": "^4.3.1",
     "axios": "^0.19.2",
     "craco-less": "^1.17.0",
+    "fs": "0.0.1-security",
     "immutable": "^4.0.0-rc.12",
     "less-loader": "^6.1.0",
     "react": "^16.13.1",
@@ -54,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.36"
   }
 }

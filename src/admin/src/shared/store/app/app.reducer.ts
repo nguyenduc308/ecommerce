@@ -1,4 +1,4 @@
-import { SHOW_LOADING, HIDE_LOADING } from "./constansts";
+import { SHOW_LOADING, HIDE_LOADING } from "./constants";
 import { fromJS } from "immutable";
 
 const initialState = fromJS({

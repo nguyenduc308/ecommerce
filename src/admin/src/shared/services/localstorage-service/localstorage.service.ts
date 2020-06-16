@@ -1,6 +1,6 @@
-import { localstorage_key } from "config";
+import { localstorage_key } from "app-config";
 
-class Storate {
+class Storage {
     private _data = JSON.parse(localStorage.getItem(this.KEY) || "{}");
 
     constructor(private KEY: string = 'DATA') {}
@@ -21,4 +21,4 @@ class Storate {
     }
 }
 
-export default new Storate(localstorage_key);
+export default new Storage(localstorage_key);

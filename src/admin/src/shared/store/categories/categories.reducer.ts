@@ -1,4 +1,4 @@
-import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY, CREATE_CATEGORY } from "./contansts";
+import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY, CREATE_CATEGORY } from "./constants";
 import { fromJS } from 'immutable';
 
 const initialState = fromJS({

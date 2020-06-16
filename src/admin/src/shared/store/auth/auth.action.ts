@@ -1,12 +1,12 @@
-import { httpAxios } from "shared/helpers/axios-service";
+import { httpAxios } from "../../services/axios-service";
 import { Dispatch } from "redux";
-import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./contansts";
-import localstorageService from "shared/helpers/localstorage-service/localstorage.service";
+import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./constants";
+import { storage } from "../../services/localstorage-service";
 
 export const fetchLogin = (user: {email: string, password: string}):  ThunkResult<Promise<boolean>> => async (dispatch: Dispatch) => {
     try {
         const res = await httpAxios.post('/auth/login', { email: user.email, password: user.password });
-        localstorageService.setData(res);
+        storage.setData(res);
         dispatch(loginSuccess(res));
         return Promise.resolve(true)
     }

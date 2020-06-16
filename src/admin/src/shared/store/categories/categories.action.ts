@@ -1,8 +1,8 @@
-import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY, CREATE_CATEGORY } from "./contansts"
+import { GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAIL, DELETE_CATEGORY, CREATE_CATEGORY } from "./constants"
 import { Dispatch } from "redux";
 import {  toast } from 'react-toastify';
 
-import { httpAxios } from "shared/helpers/axios-service";
+import { httpAxios } from "../../services/axios-service";
 import { showLoading, hideLoading } from "../app/app.action";
 
 export const fetchCategories = ()=> async (dispatch: Dispatch) => {
@@ -12,7 +12,7 @@ export const fetchCategories = ()=> async (dispatch: Dispatch) => {
             dispatch(hideLoading());
             dispatch(getCategoriesSuccess(data.categories));
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(hideLoading());
             dispatch(getCategoriesFail("Some error occurred"));
         })

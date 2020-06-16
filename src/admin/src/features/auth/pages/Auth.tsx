@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom'
-import { PATHS } from 'config';
+import { PATHS } from 'app-config';
 import Login from './Login';
 import Register from './Register';
 import { AuthWrapper } from '../components/Auth.styled';

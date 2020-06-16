@@ -1,10 +1,10 @@
-import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./contansts";
+import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./constants";
 import { fromJS } from 'immutable';
-import localstorageService from "shared/helpers/localstorage-service/localstorage.service";
+import { storage } from "../../services/localstorage-service";
 
 const initialState = fromJS({
     isAuthenticated: false,
-    token: localstorageService.token,
+    token: storage.token,
     currentUser: null
 })
 

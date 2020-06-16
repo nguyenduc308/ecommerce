@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError, AxiosPromise } from 'axios';
-import { API } from 'config';
-import { storage } from '../localstorage-service';
+import { API } from 'app-config';
+import { storage } from 'shared/services/localstorage-service';
 
 class AxiosService {
     private service = axios.create();

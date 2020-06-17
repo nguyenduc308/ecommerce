@@ -40,12 +40,10 @@ const deleteCategory = (slug: string): Action => ({type:DELETE_CATEGORY, payload
 export const fetchCreateCategory = (category: Category): ThunkResult<Promise<boolean>> => async (dispatch: Dispatch) => {
     try {
         const res:any = await httpAxios.post(`/categories`, category);
-        toast.success("Created Success !");
         dispatch(createCategory(res))
         return Promise.resolve(true)
     }
     catch (error) {
-        toast.error("Created Fail !");
         return Promise.reject(error);
     }
 }

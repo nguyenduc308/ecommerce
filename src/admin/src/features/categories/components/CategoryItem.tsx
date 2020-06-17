@@ -10,6 +10,7 @@ const CategoryItem: React.FC<Props> = ({category, deleteCategory}) => {
     return (
         <Fragment>
             <p style={{marginRight: '30px'}}>{category.name}</p> 
+            <p style={{marginRight: '30px'}}>{category.slug}</p>
             <Button 
             type="text" 
             danger

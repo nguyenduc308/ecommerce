@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CategoryItemWrapper = styled.div`
-    &: hover {
+    &:hover {
         background-color: #efefef;
     }
 `

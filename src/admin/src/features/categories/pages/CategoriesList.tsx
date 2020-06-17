@@ -18,7 +18,7 @@ const CategoriesList: React.FC<any | null | void> = () => {
     }, [dispatch]);
 
     const deleteCategory = (slug: string) => {
-      dispatch(fetchDeleteCategory(slug));
+        dispatch(fetchDeleteCategory(slug));
     }
 
     return (
@@ -39,6 +39,7 @@ const CategoriesList: React.FC<any | null | void> = () => {
                     </Skeleton>
                 )}
                 />
+                
         </Fragment>
     )
 }

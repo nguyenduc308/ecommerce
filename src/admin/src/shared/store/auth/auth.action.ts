@@ -1,6 +1,6 @@
 import { httpAxios } from "../../services/axios-service";
 import { Dispatch } from "redux";
-import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./constants";
+import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT, LOGOUT } from "./constants";
 import { storage } from "../../services/localstorage-service";
 
 export const fetchLogin = (user: {email: string, password: string}):  ThunkResult<Promise<boolean>> => async (dispatch: Dispatch) => {
@@ -18,6 +18,10 @@ export const fetchLogin = (user: {email: string, password: string}):  ThunkResul
 const loginSuccess = (data: any): Action => ({
     type: LOGIN_SUCCESS,
     payload: data
+})
+
+export const logout = (): Action =>  ({
+    type: LOGOUT
 })
 
 export const autoLogin = (): Action => ({

@@ -1,9 +1,10 @@
 import React from 'react'
 import Typography from 'antd/lib/typography';
 import Title from 'antd/lib/typography/Title';
+import { useNotAuth } from 'shared/hooks';
 
 const Register: React.FC = () => {
-    console.log("call res")
+    useNotAuth();
     return (
         <div>
             <Typography>   

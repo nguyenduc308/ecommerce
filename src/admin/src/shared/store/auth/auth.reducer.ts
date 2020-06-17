@@ -1,12 +1,11 @@
-import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT } from "./constants";
-import { fromJS } from 'immutable';
+import { LOGIN_SUCCESS, AUTO_LOGIN, AUTO_LOGOUT, LOGOUT } from "./constants";
 import { storage } from "../../services/localstorage-service";
 
-const initialState = fromJS({
-    isAuthenticated: false,
+const initialState = {
+    isAuthenticated: true,
     token: storage.token,
     currentUser: null
-})
+}
 
 export default (state = initialState, action: Action) => {
     switch (action.type) {
@@ -21,6 +20,11 @@ export default (state = initialState, action: Action) => {
                 isAuthenticated: true
             }
         case AUTO_LOGOUT: 
+            return {
+                ...state,
+                isAuthenticated: false
+            }
+        case LOGOUT:
             return {
                 ...state,
                 isAuthenticated: false

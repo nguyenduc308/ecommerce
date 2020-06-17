@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
 export const ContentWrapper = styled.header`
-    padding:  0 20px;
+    padding:  0 20px 20px 20px;
 `

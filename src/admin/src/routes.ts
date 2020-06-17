@@ -4,6 +4,7 @@
 import { PATHS } from './app-config';
 import { CategoriesList, CategoryCreate } from './features/categories';
 import { Home } from './features/home';
+import { Auth } from 'features/auth';
 
 interface IProps {
     exact?: boolean;
@@ -35,7 +36,7 @@ const routes: IProps[] = [
         path: PATHS.AUTH,
         private: false,
         exact: false,
-        component: CategoryCreate
+        component: Auth
     },
 ]
 

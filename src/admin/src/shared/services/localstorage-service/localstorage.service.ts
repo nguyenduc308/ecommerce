@@ -19,6 +19,9 @@ class Storage {
     setData(data: any):void {
         localStorage.setItem(this.KEY, JSON.stringify(data));
     }
+    removeData():void {
+        localStorage.removeItem(this.KEY)
+    }
 }
 
 export default new Storage(localstorage_key);

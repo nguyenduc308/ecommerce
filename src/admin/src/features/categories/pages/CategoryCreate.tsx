@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import slugify from 'slugify';
-
 import { useDispatch } from 'react-redux';
 import { fetchCreateCategory } from 'shared/store/categories/categories.action';
 import CategoryForm from '../components/CategoryForm';
 import { FormInstance } from 'antd/lib/form';
-import CategoryPreview from '../components/CategoryPreview';
+// import CategoryPreview from '../components/CategoryPreview';
 import { CategoryCreateWrapper } from '../components/CategoryCreate.styled';
 
 const CategoryCreate: React.FC = () => {
@@ -16,6 +14,7 @@ const CategoryCreate: React.FC = () => {
     let timer: any;
 
     const handleSubmit = (category: Category, form: FormInstance) => {
+        console.log(category);
         setStatus({...status, loading: true})
         dispatch(fetchCreateCategory(category))
         .then(() => {
@@ -44,7 +43,7 @@ const CategoryCreate: React.FC = () => {
         setCategoryPreview(
             {...categoryPreview, 
                 name: values.name,
-                slug: slugify(values.name).toLowerCase()
+                slug: values.slug
             });
     }
     useEffect(()=> {
@@ -60,7 +59,7 @@ const CategoryCreate: React.FC = () => {
             status={status}
             getPreviewCategory={getPreviewCategory}
             />
-            <CategoryPreview {...categoryPreview} created={createdCategory} status={status}/>
+            {/* <CategoryPreview {...categoryPreview} created={createdCategory} status={status}/> */}
         </CategoryCreateWrapper>
     )
 }

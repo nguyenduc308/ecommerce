@@ -32,9 +32,10 @@ module.exports.getCategories = async (req, res) => {
 
 }
 module.exports.createCategory = async (req, res) => {
-    const { name } = req.body;
-    const slug = slugify(name).toLowerCase();
-    
+    let { name, slug } = req.body;
+    if(!slug) {
+        slug = slugify(name).toLowerCase();
+    }
     try {
         const category = await Category.findOne({slug});
         if(category) return res.status(400).json({
@@ -71,14 +72,17 @@ module.exports.deleteCategory = async (req, res) => {
     }
 }
 module.exports.updateCategory = async (req, res) => {
-    const slug  = req.params.slug.toLowerCase();
-    const { name } = req.body;
+    const slugReq  = req.params.slug.toLowerCase();
+    let { name, slug } = req.body;
     try {
-        const category = await Category.findOne({slug});
+        const category = await Category.findOne({slugReq});
         if(!category) return res.status(400).json({
             message: "Category not found"
         })
         category.name = name;
+        if(!!slug) {
+            category.slug = slug;
+        }
         category.save();
         return res.status(200).json({
             category,

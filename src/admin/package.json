@@ -18,7 +18,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
     "antd": "^4.3.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "craco-less": "^1.17.0",
     "fs": "0.0.1-security",
     "immutable": "^4.0.0-rc.12",
